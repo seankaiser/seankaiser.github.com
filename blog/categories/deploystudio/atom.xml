@@ -4,7 +4,7 @@
   <title><![CDATA[Category: deploystudio | Stuff Sean Shares]]></title>
   <link href="http://seankaiser.github.io/blog/categories/deploystudio/atom.xml" rel="self"/>
   <link href="http://seankaiser.github.io/"/>
-  <updated>2013-05-01T10:04:20-04:00</updated>
+  <updated>2013-05-01T10:06:21-04:00</updated>
   <id>http://seankaiser.github.io/</id>
   <author>
     <name><![CDATA[Sean Kaiser]]></name>
@@ -87,11 +87,11 @@
     <link href="http://seankaiser.github.io/blog/2013/01/15/were-doing-what-and-on-what-timeline/"/>
     <updated>2013-01-15T12:30:00-05:00</updated>
     <id>http://seankaiser.github.io/blog/2013/01/15/were-doing-what-and-on-what-timeline</id>
-    <content type="html"><![CDATA[<p><strong>The project</strong></p>
+    <content type="html"><![CDATA[<h2>The project</h2>
 
 <p>Deploy 1170 MacBook Pros (later amended to 1250), 60 iMacs, 214 Apple TVs, 106 (full sized) new iPads, and 30 iPad minis. Relocate 100 or so "newer" (one or two year old) machines into different locations, either in different classrooms in the same building or to a different building. Retrieve nearly 1700 old machines (iBooks, eMacs, iMacs, Mac Minis, MacBooks) back to the warehouse for disposal. And do all of this in roughly 3 weeks (once the computers started arriving.)</p>
 
-<p><strong>The "problems"</strong></p>
+<h2>The "problems"</h2>
 
 <p>Under any normal circumstances, this would be a <strong>huge</strong> summer project that we'd start planning around this time of the year. But this project was on the fast track. For various reasons, we were going to do this during the school year. The vast majority of devices would be ordered in two waves, the first in mid-November and the second a week or two later (with the additional 80 MacBook Pros ordered in early December), and we'd start deploying machines ASAP because of limited warehouse space. And, we'd try to have everything deployed before winter break was over. Although I was involved with the later stages of deciding what computers we were buying and in what quantities, most of the rest of our team hadn't been involved, and didn't even know about the project until around the time that the first order went in. (We didn't want too many people knowing about the project until it had official board approval.) Our team (our supervisor, 3 technicians, our administrative assistant and myself) had our work cut out for us.</p>
 
@@ -108,8 +108,6 @@
 <p>So that was the project. No big deal... ha. This was by far the biggest project our department had ever undertaken in the 12+ years I've been here. And we had to be successful, or we'd have everyone questioning why we were doing this during the school year.</p>
 
 <p>Over the next few posts, I'll describe how I configured deploystudio, puppet, and munki to work for us. I'll throw in some <a href="https://github.com/unixorn/luggage">luggage</a>  discussion since I'm using munki to deploy printers and needed to repackage some applications as well. Once it's done, I'll describe our reposado configuration as well. So stay tuned... this was a fun project (I can say it now that it's essentially done and we're starting to get our heads back above water) and I'm looking forward to sharing our experience.</p>
-
-<p>&nbsp;</p>
 ]]></content>
   </entry>
   
