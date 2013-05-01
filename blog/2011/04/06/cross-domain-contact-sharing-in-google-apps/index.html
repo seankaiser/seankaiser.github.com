@@ -97,15 +97,17 @@
 
 <h2>Tools</h2>
 
-<p>Google provides APIs to allow 3rd party scripts and solutions to interact with the domains. As we were setting up the domains, I remembered seeing something about a Shared Contacts API. Yesterday I started looking into what this API could do to help us solve the cross-domain contact issue. I found a Google Code project called <a href="http://code.google.com/p/google-shared-contacts-client/">Google Shared Contacts Client</a>  (or gscc for short for the rest of this document.) This python script lets you interact with the domain&#8217;s shared contacts.</p>
+<p>Google provides APIs to allow 3rd party scripts and solutions to interact with the domains. As we were setting up the domains, I remembered seeing something about a Shared Contacts API. Yesterday I started looking into what this API could do to help us solve the cross-domain contact issue. I found a Google Code project called <a href="http://code.google.com/p/google-shared-contacts-client/">Google Shared Contacts Client</a> (or gscc for short for the rest of this document.) This python script lets you interact with the domain&#8217;s shared contacts.</p>
 
-<p>To get started, you&#8217;ll need to follow the <a href="http://code.google.com/p/google-shared-contacts-client/wiki/Installation">installation instructions</a> . They&#8217;re simple. Be sure to install the <a href="http://code.google.com/p/gdata-python-client/">GData Python client library</a> , or nothing will work.</p>
+<p>To get started, you&#8217;ll need to follow the <a href="http://code.google.com/p/google-shared-contacts-client/wiki/Installation">installation instructions</a>. They&#8217;re simple. Be sure to install the <a href="http://code.google.com/p/gdata-python-client/">GData Python client library</a>, or nothing will work.</p>
 
 <h2>Export the domains&#8217; contacts</h2>
 
 <p>Once you&#8217;ve got things installed, you will want to export your domains&#8217; contact directories. From the gscc directory, you&#8217;ll want to run the command</p>
 
-<p>  python shared_contacts_profiles.py &#8211;admin=your-admin-login@domain1.com &#8211;export=domain1.csv</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  python shared_contacts_profiles.py --admin=your-admin-login@domain1.com --export=domain1.csv</span></code></pre></td></tr></table></div></figure>
+
 
 <p>(You&#8217;ll need to change the administrative account and the export file name as you see fit.)</p>
 
@@ -115,7 +117,9 @@
 
 <p>The first couple of fields in each record are the action and id fields. The export files are meant to update existing contacts, rather than add them to the directory. As exported, the action is always update, and the id is the username. When adding a record to a domain, the action should be add (hopefully I didn&#8217;t just lose you there.) As I discovered today, when you&#8217;re adding a contact, the id field must be empty. How you choose to change this is up to you. You could open the file in Excel (yuck) to do a find &amp; replace to change update to add, then clear the id column out. Or you could run the command</p>
 
-<p>  sed &#8216;s/<sup>update,[a-z]*,/add,,/&#8217;</sup> &lt; domain1.csv > domain1-fixed.csv</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  sed 's/^update,[a-z]*,/add,,/' &lt; domain1.csv &gt; domain1-fixed.csv</span></code></pre></td></tr></table></div></figure>
+
 
 <p>(This command assumes that your usernames are all lower case and don&#8217;t have special characters or numbers. If that&#8217;s not the case for you, you&#8217;ll need to change the sed command.)</p>
 
@@ -125,7 +129,9 @@
 
 <p>The final step is to import the contact directory into the other domain. It&#8217;s simple. From the gscc directory, run the command</p>
 
-<p>  python shared_contacts_profiles.py &#8211;admin=your-admin-login@domain1.com &#8211;import=domain2-fixed.csv</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  python shared_contacts_profiles.py --admin=your-admin-login@domain1.com --import=domain2-fixed.csv</span></code></pre></td></tr></table></div></figure>
+
 
 <p>(4/12/2011: fixed above command to reflect &#8211;import instead of &#8211;export)</p>
 
@@ -135,9 +141,11 @@
 
 <h2>Updating contacts list in the future</h2>
 
-<p>What happens if you&#8217;ve already loaded your domain&#8217;s contacts list, but get new staff or students? Maybe you want to add some addresses that are completely external to your domain. The easy way would be to create a CSV file that has the updated information in it. You don&#8217;t have to import a ton of empty fields. Create your file with the following fields (add additional fields if necessary, as specified in the <a href="http://code.google.com/p/google-shared-contacts-client/wiki/SupportedContactFields">gscc documentation</a> ):</p>
+<p>What happens if you&#8217;ve already loaded your domain&#8217;s contacts list, but get new staff or students? Maybe you want to add some addresses that are completely external to your domain. The easy way would be to create a CSV file that has the updated information in it. You don&#8217;t have to import a ton of empty fields. Create your file with the following fields (add additional fields if necessary, as specified in the <a href="http://code.google.com/p/google-shared-contacts-client/wiki/SupportedContactFields">gscc documentation</a>):</p>
 
-<p>Action,Name,E-mail address</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Action,Name,E-mail address</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Acceptable actions are add, update, and delete. You can mix and match actions in the same file. I suspect if you use the update or delete actions, you&#8217;ll need to have the id field included. The id field is shown in the output of the add process. You can either record it at that point, or you can run the export command and pull the id field from that file for the appropriate user(s).</p>
 </div>

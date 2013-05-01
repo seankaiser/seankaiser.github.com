@@ -9,7 +9,7 @@
   <meta name="author" content="Sean Kaiser">
 
   
-  <meta name="description" content="Previously on &#8220;The Big Project&#8221; In part 1 &nbsp;of this series, I provided an overview of what I now call &#8220;The Big Project.&#8221; &hellip;">
+  <meta name="description" content="Previously on &#8220;The Big Project&#8221; In part 1 of this series, I provided an overview of what I now call &#8220;The Big Project.&#8221; Part 2 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,7 +93,7 @@
 
 <div class="entry-content"><h2>Previously on &#8220;The Big Project&#8221;</h2>
 
-<p>In <a href="/blog/2013/01/15/were-doing-what-and-on-what-timeline/">part 1</a> &nbsp;of this series, I provided an overview of what I now call &#8220;The Big Project.&#8221; <a href="/blog/2013/01/22/the-big-project-setting-the-stage/">Part 2</a>  talked about the importance of inventorying. This article is the first of a series of more detailed technical articles describing various aspects and the tools we used to pull off this project. FIrst up&#8230;</p>
+<p>In <a href="/blog/2013/01/15/were-doing-what-and-on-what-timeline/">part 1</a> of this series, I provided an overview of what I now call &#8220;The Big Project.&#8221; <a href="/blog/2013/01/22/the-big-project-setting-the-stage/">Part 2</a> talked about the importance of inventorying. This article is the first of a series of more detailed technical articles describing various aspects and the tools we used to pull off this project. FIrst up&#8230;</p>
 
 <h2>DeployStudio</h2>
 
@@ -110,15 +110,15 @@
 <li>set the computer&#8217;s name via a query to our help desk</li>
 <li>perform an anonymous bind the machine to our open directory server</li>
 <li>install puppet, facter, a basic puppet.conf file, a tweaked ruby puppet wrapper that I copied from Gary Larizza way back when he was still in the K12 education space at Huron, and a launchdaemon to keep things running on a schedule</li>
-<li>create our default local user set (the users are actually payloadless packages created from InstaDMG&#8217;s <a href="http://code.google.com/p/instadmg/source/browse/trunk/AddOns/createUser/archived/CreateLionUser-README.txt">CreateLionUser</a> .) We create two admin accounts, one for the district tech staff to use and one for the in-building tech support staff to use. We also have a passwordless &#8220;classroom&#8221; account so that users can access the local machine in case the network or server (either file server or open directory infrastructure) is down.</li>
+<li>create our default local user set (the users are actually payloadless packages created from InstaDMG&#8217;s <a href="http://code.google.com/p/instadmg/source/browse/trunk/AddOns/createUser/archived/CreateLionUser-README.txt">CreateLionUser</a>.) We create two admin accounts, one for the district tech staff to use and one for the in-building tech support staff to use. We also have a passwordless &#8220;classroom&#8221; account so that users can access the local machine in case the network or server (either file server or open directory infrastructure) is down.</li>
 <li>install munki</li>
 <li>skip Apple&#8217;s setup assistant that runs for new machines and enable the ARD agent</li>
 <li>set munki&#8217;s client_identifier via a query to our help desk</li>
 <li>set softwareupdate&#8217;s CatalogURL to point to the central reposado server and, based on information gathered via a query to our help desk, configure it to use the test catalog</li>
 <li>join the computer to the appropriate wifi network as specified in the help desk (if one is specified. Since a majority our new computers are MacBook Pros, they all have a wifi network specified. The new iMacs and most of the relocated machines are all hardwired, so they don&#8217;t have a network specified, and the script just exits appropriately.)</li>
 <li>perform a non-destructive partition of the hard drive into two partitions (after checking that the drive only has one partition.) The first partition is set to 250GB, with the second partition using the remaining space (which has to be calculated since the diskutil command doesn&#8217;t know how to &#8220;use remaining space&#8221;.) The script then grabs the UUID for the new second partition and adds it to /etc/fstab to be mounted at /Users (after checking that this information isn&#8217;t already in the file.) It also creates a new Shared folder to match the one that&#8217;s in the /Users folder by default on an OS X machine. Having this partition in place allows the users of the machine to have a space that&#8217;s safe from future reimaging. Our teaching staff are using portable home directories (I know&#8230; bad word) so their local synchronized home folder sits on this &#8220;safe&#8221; partition.</li>
-<li>touches&nbsp;/Users/Shared/.com.googlecode.munki.checkandinstallatstartup to <a href="http://code.google.com/p/munki/wiki/BootstrappingWithMunki">bootstrap munki</a> &nbsp;(make munki run immediately upon boot instead of on its regular schedule.)</li>
-<li>reboot the machine (I have a reboot step because I&#8217;ve configured DeployStudio not to reboot after a workflow runs so we can run multiple workflows if necessary. The drawback of this is that computers never appear to finish in the Activity area of DeployStudio.)&nbsp;</li>
+<li>touches /Users/Shared/.com.googlecode.munki.checkandinstallatstartup to <a href="http://code.google.com/p/munki/wiki/BootstrappingWithMunki">bootstrap munki</a> (make munki run immediately upon boot instead of on its regular schedule.)</li>
+<li>reboot the machine (I have a reboot step because I&#8217;ve configured DeployStudio not to reboot after a workflow runs so we can run multiple workflows if necessary. The drawback of this is that computers never appear to finish in the Activity area of DeployStudio.)</li>
 </ul>
 
 
@@ -126,7 +126,7 @@
 
 <h2>Full reimage workflow</h2>
 
-<p>If we do actually deploy a new image, it&#8217;s usually because something has gone wrong on the machine or we&#8217;ve simply replaced the hard drive. I&#8217;ve used InstaDMG to create a vanila 10.6, 10.7, and 10.8 image. Since we have 6 elementary schools, a middle school, a high school, a service center (where my department&#8217;s offices are), and the administrative office, each with their own LAN and only a 25 mbps WAN link back to the datacenter, I&#8217;ve implemented a modified version of a strategy I discovered a couple of years ago to have a <a href="http://www.deploystudio.com/Forums/viewtopic.php?pid=2614">central DeployStudio server with local images repositories</a> . (I know DeployStudio now offers a synchronization process, but I&#8217;ve never looked into it. This process works well for us. And, remember from part 1, one of the steps I had to complete to start this project was to update DeployStudio and its NetBoot image&#8230; I doubt that prior to a month and a half ago that the version we were running offered synchronization.)</p>
+<p>If we do actually deploy a new image, it&#8217;s usually because something has gone wrong on the machine or we&#8217;ve simply replaced the hard drive. I&#8217;ve used InstaDMG to create a vanila 10.6, 10.7, and 10.8 image. Since we have 6 elementary schools, a middle school, a high school, a service center (where my department&#8217;s offices are), and the administrative office, each with their own LAN and only a 25 mbps WAN link back to the datacenter, I&#8217;ve implemented a modified version of a strategy I discovered a couple of years ago to have a <a href="http://www.deploystudio.com/Forums/viewtopic.php?pid=2614">central DeployStudio server with local images repositories</a>. (I know DeployStudio now offers a synchronization process, but I&#8217;ve never looked into it. This process works well for us. And, remember from part 1, one of the steps I had to complete to start this project was to update DeployStudio and its NetBoot image&#8230; I doubt that prior to a month and a half ago that the version we were running offered synchronization.)</p>
 
 <p>So, our complete reimage workflow looks like this:</p>
 
@@ -145,7 +145,7 @@
 
 <p>Since we could get 10 computers going at a time, and get those 10 computers booted into DeployStudio, run the workflow, reboot to go through the firstboot process, reboot a second time, let puppet and munki run to install our settings and applications (which will be detailed in subsequent articles), then shut the computers down to rebox them, all in about 15-20 minutes per group. While one batch was running, we&#8217;d unbox the next batch and have them ready to move into place when the previous batch was finished.</p>
 
-<p><strong>Think about that&#8230; every 15-20 minutes, we had 10 computers ready to be deployed, with our applications, our users, our settings, etc.</strong>&nbsp;Repeat that process 120+ times, and you can understand how I was able to successfully Northmont-ize an iMac whose display was DOA. After a while, I could do that process in my sleep, knowing about how long to wait for each step of the process, how many down arrows to press to get to our workflow, etc. I did get a bit excited (probably overly so) when we heard the iMac reboot after the workflow ran, then reboot again a couple of minutes later when the first boot processes finished.</p>
+<p><strong>Think about that&#8230; every 15-20 minutes, we had 10 computers ready to be deployed, with our applications, our users, our settings, etc.</strong> Repeat that process 120+ times, and you can understand how I was able to successfully Northmont-ize an iMac whose display was DOA. After a while, I could do that process in my sleep, knowing about how long to wait for each step of the process, how many down arrows to press to get to our workflow, etc. I did get a bit excited (probably overly so) when we heard the iMac reboot after the workflow ran, then reboot again a couple of minutes later when the first boot processes finished.</p>
 
 <p>Another benefit of thin imaging and using tools like puppet and munki is that as things change, things need to be added, etc., you&#8217;ve got a system in place that will handle that, automatically. You don&#8217;t need to rebuild your image.</p>
 
