@@ -95,6 +95,9 @@
 
 <p>For our Google Apps implementation, we are using two different domains: one for staff and one for students. This was recommended to us by others, and we already owned the domains, so it made sense. The problem with this approach is that the user directory that allows users within a domain to simply type in a user&#8217;s name and then select their address from a list doesn&#8217;t work when some users are in one domain and the rest are in the other. Sure, each user could create the contacts in their personal contacts list, but for a teacher to create a new contact for each of their students would take considerable time. They&#8217;d also have to have access to the user list to know what the student email addresses are.</p>
 
+<!-- more -->
+
+
 <h2>Tools</h2>
 
 <p>Google provides APIs to allow 3rd party scripts and solutions to interact with the domains. As we were setting up the domains, I remembered seeing something about a Shared Contacts API. Yesterday I started looking into what this API could do to help us solve the cross-domain contact issue. I found a Google Code project called <a href="http://code.google.com/p/google-shared-contacts-client/">Google Shared Contacts Client</a> (or gscc for short for the rest of this document.) This python script lets you interact with the domain&#8217;s shared contacts.</p>
@@ -184,7 +187,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://seankaiser.github.io/blog/2011/04/06/cross-domain-contact-sharing-in-google-apps/" data-via="" data-counturl="http://seankaiser.github.io/blog/2011/04/06/cross-domain-contact-sharing-in-google-apps/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://seankaiser.github.io/blog/2011/04/06/cross-domain-contact-sharing-in-google-apps/" data-via="seankaiser" data-counturl="http://seankaiser.github.io/blog/2011/04/06/cross-domain-contact-sharing-in-google-apps/" >Tweet</a>
   
   
   
@@ -231,6 +234,35 @@
       </li>
     
   </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/seankaiser">@seankaiser</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'seankaiser',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 

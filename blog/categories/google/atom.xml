@@ -4,7 +4,7 @@
   <title><![CDATA[Category: google | Stuff Sean Shares]]></title>
   <link href="http://seankaiser.github.io/blog/categories/google/atom.xml" rel="self"/>
   <link href="http://seankaiser.github.io/"/>
-  <updated>2013-05-01T10:21:27-04:00</updated>
+  <updated>2013-05-01T10:36:13-04:00</updated>
   <id>http://seankaiser.github.io/</id>
   <author>
     <name><![CDATA[Sean Kaiser]]></name>
@@ -21,6 +21,9 @@
     <content type="html"><![CDATA[<h2>A bit of background</h2>
 
 <p>For our Google Apps implementation, we are using two different domains: one for staff and one for students. This was recommended to us by others, and we already owned the domains, so it made sense. The problem with this approach is that the user directory that allows users within a domain to simply type in a user's name and then select their address from a list doesn't work when some users are in one domain and the rest are in the other. Sure, each user could create the contacts in their personal contacts list, but for a teacher to create a new contact for each of their students would take considerable time. They'd also have to have access to the user list to know what the student email addresses are.</p>
+
+<!-- more -->
+
 
 <h2>Tools</h2>
 

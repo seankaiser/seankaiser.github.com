@@ -99,6 +99,9 @@
 
 <p>Under any normal circumstances, this would be a <strong>huge</strong> summer project that we&#8217;d start planning around this time of the year. But this project was on the fast track. For various reasons, we were going to do this during the school year. The vast majority of devices would be ordered in two waves, the first in mid-November and the second a week or two later (with the additional 80 MacBook Pros ordered in early December), and we&#8217;d start deploying machines ASAP because of limited warehouse space. And, we&#8217;d try to have everything deployed before winter break was over. Although I was involved with the later stages of deciding what computers we were buying and in what quantities, most of the rest of our team hadn&#8217;t been involved, and didn&#8217;t even know about the project until around the time that the first order went in. (We didn&#8217;t want too many people knowing about the project until it had official board approval.) Our team (our supervisor, 3 technicians, our administrative assistant and myself) had our work cut out for us.</p>
 
+<!-- more -->
+
+
 <p>Inventorying all of the new equipment, then physically removing the old computers and placing new 13&#8221; MacBook Pros would be a relatively easy process. The real challenge was getting our deployment tools updated and in place in order to get 1400+ computers ready to deploy (or redeploy.) We&#8217;d already bought into the &#8220;thin imaging&#8221; mindset (adding management tools to a new machine and using those tools to install applications, etc., versus building a whole new image with necessary applications included) via <a href="http://www.deploystudio.com/Home.html">deploystudio</a>. We had been using <a href="http://puppetlabs.com/puppet/what-is-puppet/">puppet</a> to do our software installs, but we hadn&#8217;t been very diligent in keeping the software that was installed on existing machines updated (we had only recently pushed Firefox 15 out to machines that had been running 3.6.28, for example.)</p>
 
 <p>I&#8217;ve been to several conferences and learned about <a href="http://code.google.com/p/munki/">munki</a>, and wanted to start using it, but had never taken the time to get something set up beyond using puppet to install munki on a test machine. Now I had to get a fully functioning munki system set up, and I had to do it quickly. I had to change our puppet configuration to manage the state of the computers (things like ensuring remote login was enabled, certain users existed on the computers, etc.) and move software installation over to munki. I also had to change the scripts that I had written for puppet to look up information from our help desk to return valid data for munki (while still returning valid data for puppet.) Based on the responses on a recent staff survey, we wanted to give staff the ability to install and update software without needing help from someone in our department. We wanted to leverage munki&#8217;s optional software feature to make software available and let the end users decide if it was something they want to use. Because munki doesn&#8217;t require a password to do installations/updates, our end users will now be able to do their own installations and updates (at least as much as we make available to them.)</p>
@@ -148,7 +151,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://seankaiser.github.io/blog/2013/01/15/were-doing-what-and-on-what-timeline/" data-via="" data-counturl="http://seankaiser.github.io/blog/2013/01/15/were-doing-what-and-on-what-timeline/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://seankaiser.github.io/blog/2013/01/15/were-doing-what-and-on-what-timeline/" data-via="seankaiser" data-counturl="http://seankaiser.github.io/blog/2013/01/15/were-doing-what-and-on-what-timeline/" >Tweet</a>
   
   
   
@@ -195,6 +198,35 @@
       </li>
     
   </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/seankaiser">@seankaiser</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'seankaiser',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
