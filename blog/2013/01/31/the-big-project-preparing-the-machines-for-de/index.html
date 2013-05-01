@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The Big Project- Preparing the machines for deployment with DeployStudio - Stuff Sean Shares</title>
+  <meta name="author" content="Sean Kaiser">
+
+  
+  <meta name="description" content="Previously on &#8220;The Big Project&#8221; In part 1 &nbsp;of this series, I provided an overview of what I now call &#8220;The Big Project.&#8221; &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://seankaiser.github.io/blog/2013/01/31/the-big-project-preparing-the-machines-for-de">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Stuff Sean Shares" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Stuff Sean Shares</a></h1>
+  
+    <h2>A home for things I feel inclined to share with others</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:seankaiser.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">The Big Project- Preparing the Machines for Deployment With DeployStudio</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-31T06:00:00-05:00" pubdate data-updated="true">Jan 31<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Previously on &#8220;The Big Project&#8221;</p>
+
+<p>In <a href="http://seankaiser.posterous.com/were-doing-what-and-on-what-timeline">part 1</a> &nbsp;of this series, I provided an overview of what I now call &#8220;The Big Project.&#8221; <a href="http://seankaiser.posterous.com/the-big-project-setting-the-stage">Part 2</a>  talked about the importance of inventorying. This article is the first of a series of more detailed technical articles describing various aspects and the tools we used to pull off this project. FIrst up&#8230;</p>
+
+<p>DeployStudio</p>
+
+<p>We&#8217;ve been using DeployStudio for several years to help us image machines. In the (relatively distant) past, we restored full monolithic images to machines, new or old. Over the past almost two years, we&#8217;ve switched to the thin imaging model. Thin imaging is a method of preserving the contents of a machine&#8217;s hard drive and deploying either site specific applications or deployment tools to facilitate the installation of such applications and other files in an effort to minimize the amount of time needed to get a machine ready for a user. In our case, we deploy our deployment tools (puppet and munki) and some basic settings. This cuts down on the deployment cost, in both time and bits traveling across the network.</p>
+
+<p>In situations where we need to reimage a machine, we have a workflow that lays down an InstaDMG created vanilla image and then runs the normal thin imaging workflow.</p>
+
+<p>The thin imaging workflow</p>
+
+<p>When we &#8220;Northmont-ize a new machine&#8221; (the name of our thin imaging workflow), DeployStudio performs the initial basic setup fo our machines. Everything is rather basic at this point. The workflow does the following:</p>
+
+<ul>
+<li>set the time server to our internal NTP server. (This is the only non-automated step in the workflow. I didn&#8217;t automate this step to let the technician confirm that the correct drive is selected as the target volume. All other steps are automated and use the previous task target option for the target volume.)</li>
+<li>set the computer&#8217;s name via a query to our help desk</li>
+<li>perform an anonymous bind the machine to our open directory server</li>
+<li>install puppet, facter, a basic puppet.conf file, a tweaked ruby puppet wrapper that I copied from Gary Larizza way back when he was still in the K12 education space at Huron, and a launchdaemon to keep things running on a schedule</li>
+<li>create our default local user set (the users are actually payloadless packages created from InstaDMG&#8217;s <a href="http://code.google.com/p/instadmg/source/browse/trunk/AddOns/createUser/archived/CreateLionUser-README.txt">CreateLionUser</a> .) We create two admin accounts, one for the district tech staff to use and one for the in-building tech support staff to use. We also have a passwordless &#8220;classroom&#8221; account so that users can access the local machine in case the network or server (either file server or open directory infrastructure) is down.</li>
+<li>install munki</li>
+<li>skip Apple&#8217;s setup assistant that runs for new machines and enable the ARD agent</li>
+<li>set munki&#8217;s client_identifier via a query to our help desk</li>
+<li>set softwareupdate&#8217;s CatalogURL to point to the central reposado server and, based on information gathered via a query to our help desk, configure it to use the test catalog</li>
+<li>join the computer to the appropriate wifi network as specified in the help desk (if one is specified. Since a majority our new computers are MacBook Pros, they all have a wifi network specified. The new iMacs and most of the relocated machines are all hardwired, so they don&#8217;t have a network specified, and the script just exits appropriately.)</li>
+<li>perform a non-destructive partition of the hard drive into two partitions (after checking that the drive only has one partition.) The first partition is set to 250GB, with the second partition using the remaining space (which has to be calculated since the diskutil command doesn&#8217;t know how to &#8220;use remaining space&#8221;.) The script then grabs the UUID for the new second partition and adds it to /etc/fstab to be mounted at /Users (after checking that this information isn&#8217;t already in the file.) It also creates a new Shared folder to match the one that&#8217;s in the /Users folder by default on an OS X machine. Having this partition in place allows the users of the machine to have a space that&#8217;s safe from future reimaging. Our teaching staff are using portable home directories (I know&#8230; bad word) so their local synchronized home folder sits on this &#8220;safe&#8221; partition.</li>
+<li>touches&nbsp;/Users/Shared/.com.googlecode.munki.checkandinstallatstartup to <a href="http://code.google.com/p/munki/wiki/BootstrappingWithMunki">bootstrap munki</a> &nbsp;(make munki run immediately upon boot instead of on its regular schedule.)</li>
+<li>reboot the machine (I have a reboot step because I&#8217;ve configured DeployStudio not to reboot after a workflow runs so we can run multiple workflows if necessary. The drawback of this is that computers never appear to finish in the Activity area of DeployStudio.)&nbsp;</li>
+</ul>
+
+
+<p>All of our workflows run as &#8220;postponed installations&#8221;. Is this necessary? For some steps, such as installing packages, it seems to work better. Since I&#8217;m doing a postponed install for some things, I decided to do it for all steps.</p>
+
+<p>Full reimage workflow</p>
+
+<p>If we do actually deploy a new image, it&#8217;s usually because something has gone wrong on the machine or we&#8217;ve simply replaced the hard drive. I&#8217;ve used InstaDMG to create a vanila 10.6, 10.7, and 10.8 image. Since we have 6 elementary schools, a middle school, a high school, a service center (where my department&#8217;s offices are), and the administrative office, each with their own LAN and only a 25 mbps WAN link back to the datacenter, I&#8217;ve implemented a modified version of a strategy I discovered a couple of years ago to have a <a href="http://www.deploystudio.com/Forums/viewtopic.php?pid=2614">central DeployStudio server with local images repositories</a> . (I know DeployStudio now offers a synchronization process, but I&#8217;ve never looked into it. This process works well for us. And, remember from part 1, one of the steps I had to complete to start this project was to update DeployStudio and its NetBoot image&#8230; I doubt that prior to a month and a half ago that the version we were running offered synchronization.)</p>
+
+<p>So, our complete reimage workflow looks like this:</p>
+
+<ul>
+<li>run the local repository mount script</li>
+<li>restore the vanilla image</li>
+<li>run the northmont-ize workflow described above</li>
+</ul>
+
+
+<p>The logistics of prepping 1200+ machines</p>
+
+<p>We wanted our machines to be usable as soon as we deployed them so as to cut down on the amount of time we were in the schools. (In one case, we actually replaced a school&#8217;s computers as the students cycled through lunch, which at that school&#8217;s was about an hour and a half.)</p>
+
+<p>Since our offices are on the second floor in our building, and although our server room has a garage door that allows our warehouseman to forklift pallets of equipment through, we had no intention of moving 240+ 5-pack boxes of MacBook Pros any more than we really needed to. We commandeered a couple of tables near the staff mailboxes downstairs between our storage &#8220;cage&#8221; and the warehouse, dropped a couple of extension cords and a patch cord (offering a gigabit connection) from the office space above, and set up an imaging bench with an HP switch, two power strips, and 10 Magsafe power adapters. One of my coworkers had the idea of taping the power and patch cords to the tables so they didn&#8217;t slide around. Initially I wasn&#8217;t sure this was necessary, but it turned out to be brilliant.</p>
+
+<p>Since we could get 10 computers going at a time, and get those 10 computers booted into DeployStudio, run the workflow, reboot to go through the firstboot process, reboot a second time, let puppet and munki run to install our settings and applications (which will be detailed in subsequent articles), then shut the computers down to rebox them, all in about 15-20 minutes per group. While one batch was running, we&#8217;d unbox the next batch and have them ready to move into place when the previous batch was finished.</p>
+
+<p><strong>Think about that&#8230; every 15-20 minutes, we had 10 computers ready to be deployed, with our applications, our users, our settings, etc.</strong>&nbsp;Repeat that process 120+ times, and you can understand how I was able to successfully Northmont-ize an iMac whose display was DOA. After a while, I could do that process in my sleep, knowing about how long to wait for each step of the process, how many down arrows to press to get to our workflow, etc. I did get a bit excited (probably overly so) when we heard the iMac reboot after the workflow ran, then reboot again a couple of minutes later when the first boot processes finished.</p>
+
+<p>Another benefit of thin imaging and using tools like puppet and munki is that as things change, things need to be added, etc., you&#8217;ve got a system in place that will handle that, automatically. You don&#8217;t need to rebuild your image.</p>
+
+<p>What&#8217;s coming up</p>
+
+<p>&nbsp;</p>
+
+<p>I&#8217;ll have dedicated articles on our puppet and munki configurations, a brief discussion on how I&#8217;m using luggage to package printer installers and repackage applications that don&#8217;t come with good installers, some tips on inventorying machines, and some scripts that I&#8217;ve written to tie everything together, and finally reposado, in that general order.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sean Kaiser</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-31T06:00:00-05:00" pubdate data-updated="true">Jan 31<span>st</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/deploystudio/'>deploystudio</a>, <a class='category' href='/blog/categories/macadmin/'>macadmin</a>, <a class='category' href='/blog/categories/the-big-project/'>the big project</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://seankaiser.github.io/blog/2013/01/31/the-big-project-preparing-the-machines-for-de/" data-via="" data-counturl="http://seankaiser.github.io/blog/2013/01/31/the-big-project-preparing-the-machines-for-de/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/22/the-big-project-setting-the-stage/" title="Previous Post: The Big Project- Setting the Stage by Inventorying">&laquo; The Big Project- Setting the Stage by Inventorying</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/01/31/the-big-project-preparing-the-machines-for-de/">The Big Project- Preparing the machines for deployment with DeployStudio</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/22/the-big-project-setting-the-stage/">The Big Project- Setting the Stage by Inventorying</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/15/were-doing-what-and-on-what-timeline/">The Big Project- We're doing what, and on what timeline?!?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/04/06/cross-domain-contact-sharing-in-google-apps/">Cross-domain contact sharing in Google Apps</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/04/06/getting-started/">Getting started</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sean Kaiser -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

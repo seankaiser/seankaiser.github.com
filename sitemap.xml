@@ -1,12 +1,38 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
+        <loc>http://seankaiser.github.io/blog/2011/04/06/getting-started/</loc>
+        <lastmod>2013-04-30T16:37:27-04:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://seankaiser.github.io/blog/2011/04/06/cross-domain-contact-sharing-in-google-apps/
+        </loc>
+        <lastmod>2013-04-30T16:37:27-04:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://seankaiser.github.io/blog/2013/01/15/were-doing-what-and-on-what-timeline/
+        </loc>
+        <lastmod>2013-04-30T16:38:52-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://seankaiser.github.io/blog/2013/01/22/the-big-project-setting-the-stage/</loc>
+        <lastmod>2013-04-30T16:39:11-04:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://seankaiser.github.io/blog/2013/01/31/the-big-project-preparing-the-machines-for-de/
+        </loc>
+        <lastmod>2013-04-30T16:38:59-04:00</lastmod>
+    </url>
+    <url>
         <loc>http://seankaiser.github.io/blog/archives/</loc>
-        <lastmod>2013-04-30T15:46:33-04:00</lastmod>
+        <lastmod>2013-04-30T16:39:11-04:00</lastmod>
     </url>
     <url>
         <loc>http://seankaiser.github.io/</loc>
-        <lastmod>2013-04-30T15:46:33-04:00</lastmod>
+        <lastmod>2013-04-30T16:39:11-04:00</lastmod>
     </url>
     <url>
         <loc>http://seankaiser.github.io/robots.txt</loc>

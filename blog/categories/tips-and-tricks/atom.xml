@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: tips and tricks | Stuff Sean Shares]]></title>
+  <link href="http://seankaiser.github.io/blog/categories/tips-and-tricks/atom.xml" rel="self"/>
+  <link href="http://seankaiser.github.io/"/>
+  <updated>2013-05-01T09:56:03-04:00</updated>
+  <id>http://seankaiser.github.io/</id>
+  <author>
+    <name><![CDATA[Sean Kaiser]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[The Big Project- Setting the Stage by Inventorying]]></title>
+    <link href="http://seankaiser.github.io/blog/2013/01/22/the-big-project-setting-the-stage/"/>
+    <updated>2013-01-22T07:37:00-05:00</updated>
+    <id>http://seankaiser.github.io/blog/2013/01/22/the-big-project-setting-the-stage</id>
+    <content type="html"><![CDATA[<p>A small detour</p>
+
+<p>I was going to keep this article for near the end of the series, but then it might imply that the prep work wasn't important. This is wrong. It's very important, and in our case just as critical as the deployment tools themselves. I'd guess this is (or should be) the case everywhere.</p>
+
+<p>Why is inventorying so important?</p>
+
+<p>Any time you deploy a machine, whether it's one machine or (in our case) part of a 1300+ machine deployment, you need to add the machine to your inventory system. In our case, our inventory system is our help desk (we run Web Help Desk.) As I'll describe in later articles, many of the processes in our deployment workflow refer to the help desk and custom asset fields so we can have a dynamic configuration without having to edit files on individual machines.</p>
+
+<p>How we did it</p>
+
+<p>Before we started this project, I asked my Twitter followers if anyone had <a href="https://twitter.com/seankaiser/status/264299709722656768">recommendations for barcode scanners</a> . I got a couple of responses that folks used the Symbol barcode scanner that is recommended for use with Apple's GSX (it's the <a href="http://www.motorola.com/Business/US-EN/Business+Product+and+Services/Bar+Code+Scanning/General+Purpose+Scanners/DS6707-DP_US-EN">Symbol DS6707</a>  if you're interested.) We immediately bought this scanner because, well, we had no intention of manually entering serial numbers or ethernet and wifi addresses into the help desk. This guaranteed that there were no typos as well. Typos are bad when you depend on the data that the OS gives you to look up settings. Also, if you've ever looked at an Apple barcode, it's sometimes hard to differentiate a B from an 8, or an S from a 5. But a barcode scanner doesn't have this problem. If you don't have a barcode scanner and have trouble reading Apple's 4 point font, invest in one.</p>
+
+<p>Using the exported asset template from Web Help Desk, one of my coworkers created an import file that had all of the information we intended to import (asset numbers, room numbers, building, assigned client, etc.), except for the information from the barcodes. Two of our other coworkers handled scanning the boxes (thank you Apple for putting the three pieces of information on the outside of the MacBook Pro 5 pack boxes), applying the inventory asset tags to the machines, and labeling the boxes what asset numbers were in the box. Once they had scanned all of the machines for an individual building, they forwarded the file to me. I cleaned up some of the stuff (took off the leading S from the scanned serial number, removing spaces and converting to lower case the ethernet and wifi addresses mainly) and imported the file into Web Help Desk.</p>
+
+<p>Next step</p>
+
+<p>Now we were ready to start "imaging" the machines in DeployStudio. That's a topic worthy of its own article.</p>
+]]></content>
+  </entry>
+  
+</feed>
