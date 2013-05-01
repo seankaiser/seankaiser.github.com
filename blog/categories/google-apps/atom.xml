@@ -4,7 +4,7 @@
   <title><![CDATA[Category: google apps | Stuff Sean Shares]]></title>
   <link href="http://seankaiser.github.io/blog/categories/google-apps/atom.xml" rel="self"/>
   <link href="http://seankaiser.github.io/"/>
-  <updated>2013-05-01T10:37:48-04:00</updated>
+  <updated>2013-05-01T10:46:29-04:00</updated>
   <id>http://seankaiser.github.io/</id>
   <author>
     <name><![CDATA[Sean Kaiser]]></name>
@@ -22,14 +22,14 @@
 
 <p>For our Google Apps implementation, we are using two different domains: one for staff and one for students. This was recommended to us by others, and we already owned the domains, so it made sense. The problem with this approach is that the user directory that allows users within a domain to simply type in a user's name and then select their address from a list doesn't work when some users are in one domain and the rest are in the other. Sure, each user could create the contacts in their personal contacts list, but for a teacher to create a new contact for each of their students would take considerable time. They'd also have to have access to the user list to know what the student email addresses are.</p>
 
-<!-- more -->
-
-
 <h2>Tools</h2>
 
 <p>Google provides APIs to allow 3rd party scripts and solutions to interact with the domains. As we were setting up the domains, I remembered seeing something about a Shared Contacts API. Yesterday I started looking into what this API could do to help us solve the cross-domain contact issue. I found a Google Code project called <a href="http://code.google.com/p/google-shared-contacts-client/">Google Shared Contacts Client</a> (or gscc for short for the rest of this document.) This python script lets you interact with the domain's shared contacts.</p>
 
 <p>To get started, you'll need to follow the <a href="http://code.google.com/p/google-shared-contacts-client/wiki/Installation">installation instructions</a>. They're simple. Be sure to install the <a href="http://code.google.com/p/gdata-python-client/">GData Python client library</a>, or nothing will work.</p>
+
+<!-- more -->
+
 
 <h2>Export the domains' contacts</h2>
 

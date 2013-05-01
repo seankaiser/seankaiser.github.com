@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: the big project | Stuff Sean Shares]]></title>
-  <link href="http://seankaiser.github.io/blog/categories/the-big-project/atom.xml" rel="self"/>
+  <title><![CDATA[Category: work | Stuff Sean Shares]]></title>
+  <link href="http://seankaiser.github.io/blog/categories/work/atom.xml" rel="self"/>
   <link href="http://seankaiser.github.io/"/>
   <updated>2013-05-01T10:46:29-04:00</updated>
   <id>http://seankaiser.github.io/</id>
@@ -142,6 +142,87 @@
 <p>So that was the project. No big deal... ha. This was by far the biggest project our department had ever undertaken in the 12+ years I've been here. And we had to be successful, or we'd have everyone questioning why we were doing this during the school year.</p>
 
 <p>Over the next few posts, I'll describe how I configured deploystudio, puppet, and munki to work for us. I'll throw in some <a href="https://github.com/unixorn/luggage">luggage</a> discussion since I'm using munki to deploy printers and needed to repackage some applications as well. Once it's done, I'll describe our reposado configuration as well. So stay tuned... this was a fun project (I can say it now that it's essentially done and we're starting to get our heads back above water) and I'm looking forward to sharing our experience.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cross-domain contact sharing in Google Apps]]></title>
+    <link href="http://seankaiser.github.io/blog/2011/04/06/cross-domain-contact-sharing-in-google-apps/"/>
+    <updated>2011-04-06T20:49:00-04:00</updated>
+    <id>http://seankaiser.github.io/blog/2011/04/06/cross-domain-contact-sharing-in-google-apps</id>
+    <content type="html"><![CDATA[<h2>A bit of background</h2>
+
+<p>For our Google Apps implementation, we are using two different domains: one for staff and one for students. This was recommended to us by others, and we already owned the domains, so it made sense. The problem with this approach is that the user directory that allows users within a domain to simply type in a user's name and then select their address from a list doesn't work when some users are in one domain and the rest are in the other. Sure, each user could create the contacts in their personal contacts list, but for a teacher to create a new contact for each of their students would take considerable time. They'd also have to have access to the user list to know what the student email addresses are.</p>
+
+<h2>Tools</h2>
+
+<p>Google provides APIs to allow 3rd party scripts and solutions to interact with the domains. As we were setting up the domains, I remembered seeing something about a Shared Contacts API. Yesterday I started looking into what this API could do to help us solve the cross-domain contact issue. I found a Google Code project called <a href="http://code.google.com/p/google-shared-contacts-client/">Google Shared Contacts Client</a> (or gscc for short for the rest of this document.) This python script lets you interact with the domain's shared contacts.</p>
+
+<p>To get started, you'll need to follow the <a href="http://code.google.com/p/google-shared-contacts-client/wiki/Installation">installation instructions</a>. They're simple. Be sure to install the <a href="http://code.google.com/p/gdata-python-client/">GData Python client library</a>, or nothing will work.</p>
+
+<!-- more -->
+
+
+<h2>Export the domains' contacts</h2>
+
+<p>Once you've got things installed, you will want to export your domains' contact directories. From the gscc directory, you'll want to run the command</p>
+
+<p><code>
+$ python shared_contacts_profiles.py --admin=your-admin-login@domain1.com --export=domain1.csv
+</code></p>
+
+<p>(You'll need to change the administrative account and the export file name as you see fit.)</p>
+
+<p>You'll be prompted for your account password. This will generate a CSV file containing the specified domain's users with their various email addresses and aliases/nicknames. Now, run the same command again, but specify an administrative account in your other domain, and export it to a different file.</p>
+
+<h2>Fix the files</h2>
+
+<p>The first couple of fields in each record are the action and id fields. The export files are meant to update existing contacts, rather than add them to the directory. As exported, the action is always update, and the id is the username. When adding a record to a domain, the action should be add (hopefully I didn't just lose you there.) As I discovered today, when you're adding a contact, the id field must be empty. How you choose to change this is up to you. You could open the file in Excel (yuck) to do a find &amp; replace to change update to add, then clear the id column out. Or you could run the command</p>
+
+<p><code>
+$ sed 's/^update,[a-z]*,/add,,/' &lt; domain1.csv &gt; domain1-fixed.csv
+</code></p>
+
+<p>(This command assumes that your usernames are all lower case and don't have special characters or numbers. If that's not the case for you, you'll need to change the sed command.)</p>
+
+<p>Do this for both files.</p>
+
+<h2>Import each of the files into the other domain</h2>
+
+<p>The final step is to import the contact directory into the other domain. It's simple. From the gscc directory, run the command</p>
+
+<p><code>
+$ python shared_contacts_profiles.py --admin=your-admin-login@domain1.com --import=domain2-fixed.csv
+</code></p>
+
+<p>(4/12/2011: fixed above command to reflect --import instead of --export)</p>
+
+<p>Run the command again and switch domain1 and domain2.</p>
+
+<p>Once you've imported the files, there's nothing to do but sit back and wait for the changes to appear in the Contacts list. Google states it can take up to 24 hours for changes to the Shared Contacts list to show up.</p>
+
+<h2>Updating contacts list in the future</h2>
+
+<p>What happens if you've already loaded your domain's contacts list, but get new staff or students? Maybe you want to add some addresses that are completely external to your domain. The easy way would be to create a CSV file that has the updated information in it. You don't have to import a ton of empty fields. Create your file with the following fields (add additional fields if necessary, as specified in the <a href="http://code.google.com/p/google-shared-contacts-client/wiki/SupportedContactFields">gscc documentation</a>):</p>
+
+<p><code>
+Action,Name,E-mail address
+</code></p>
+
+<p>Acceptable actions are add, update, and delete. You can mix and match actions in the same file. I suspect if you use the update or delete actions, you'll need to have the id field included. The id field is shown in the output of the add process. You can either record it at that point, or you can run the export command and pull the id field from that file for the appropriate user(s).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting started]]></title>
+    <link href="http://seankaiser.github.io/blog/2011/04/06/getting-started/"/>
+    <updated>2011-04-06T18:28:00-04:00</updated>
+    <id>http://seankaiser.github.io/blog/2011/04/06/getting-started</id>
+    <content type="html"><![CDATA[<p>This is my first time doing any sort of blogging. I'm going to try to provide technical writeups on major projects that I work on. We'll see how it goes. I'm not the best writer or communicator. I ramble. A lot. If you can get through that, hopefully you'll be able to find a small nugget of information that helps you in your job or life.</p>
+
+<p>My current focus is moving our district from First Class email to Google Apps for Education. In First Class, we provided email accounts for most staff, but no students. Each staff member had a limited amount of disk space available for their email and a simple website. Now, staff will have tons of space for email, virtually unlimited space for documents, and the ability to have multiple websites. On top of all of that, we're providing accounts for our students to do the same thing. All of a sudden, instead of supporting around 650 or so email users, we're going to be supporting nearly 7000 email, docs, etc. users. You know what the best part is? Our department has learned a ton, has come together like never before, and we're pumped.</p>
+
+<p>With that focus, most of my initial posts will be related to this migration. Over time, posts will shift from one technology to another, from desktop management to network infrastructure to who knows what, and back and forth. If my work inspires even one person, or even just helps save someone some time or their job, I'll be happy. If not, I'll still be happy. My life is good.</p>
 ]]></content>
   </entry>
   
