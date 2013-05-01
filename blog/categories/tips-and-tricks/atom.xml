@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tips and tricks | Stuff Sean Shares]]></title>
   <link href="http://seankaiser.github.io/blog/categories/tips-and-tricks/atom.xml" rel="self"/>
   <link href="http://seankaiser.github.io/"/>
-  <updated>2013-05-01T11:44:00-04:00</updated>
+  <updated>2013-05-01T12:24:05-04:00</updated>
   <id>http://seankaiser.github.io/</id>
   <author>
     <name><![CDATA[Sean Kaiser]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[The Big Project- Setting the Stage by Inventorying]]></title>
-    <link href="http://seankaiser.github.io/blog/2013/01/22/the-big-project-setting-the-stage/"/>
+    <link href="http://seankaiser.github.io/2013/01/22/the-big-project-setting-the-stage/"/>
     <updated>2013-01-22T07:37:00-05:00</updated>
-    <id>http://seankaiser.github.io/blog/2013/01/22/the-big-project-setting-the-stage</id>
+    <id>http://seankaiser.github.io/2013/01/22/the-big-project-setting-the-stage</id>
     <content type="html"><![CDATA[<h2>A small detour</h2>
 
 <p>I was going to keep this article for near the end of the series, but then it might imply that the prep work wasn't important. This is wrong. It's very important, and in our case just as critical as the deployment tools themselves. I'd guess this is (or should be) the case everywhere.</p>

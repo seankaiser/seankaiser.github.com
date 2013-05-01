@@ -1,28 +1,26 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://seankaiser.github.io/blog/2011/04/06/getting-started/</loc>
+        <loc>http://seankaiser.github.io/2011/04/06/getting-started/</loc>
         <lastmod>2013-05-01T10:46:07-04:00</lastmod>
     </url>
     <url>
         <loc>
-            http://seankaiser.github.io/blog/2011/04/06/cross-domain-contact-sharing-in-google-apps/
+            http://seankaiser.github.io/2011/04/06/cross-domain-contact-sharing-in-google-apps/
         </loc>
         <lastmod>2013-05-01T10:45:52-04:00</lastmod>
     </url>
     <url>
-        <loc>
-            http://seankaiser.github.io/blog/2013/01/15/were-doing-what-and-on-what-timeline/
-        </loc>
+        <loc>http://seankaiser.github.io/2013/01/15/were-doing-what-and-on-what-timeline/</loc>
         <lastmod>2013-05-01T10:46:06-04:00</lastmod>
     </url>
     <url>
-        <loc>http://seankaiser.github.io/blog/2013/01/22/the-big-project-setting-the-stage/</loc>
+        <loc>http://seankaiser.github.io/2013/01/22/the-big-project-setting-the-stage/</loc>
         <lastmod>2013-05-01T10:46:06-04:00</lastmod>
     </url>
     <url>
         <loc>
-            http://seankaiser.github.io/blog/2013/01/31/the-big-project-preparing-the-machines-for-de/
+            http://seankaiser.github.io/2013/01/31/the-big-project-preparing-the-machines-for-de/
         </loc>
         <lastmod>2013-05-01T10:45:34-04:00</lastmod>
     </url>
