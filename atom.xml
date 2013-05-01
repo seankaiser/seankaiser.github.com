@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Stuff Sean Shares]]></title>
-  <link href="http://blog.seankaiser.com//atom.xml" rel="self"/>
-  <link href="http://blog.seankaiser.com//"/>
-  <updated>2013-05-01T15:24:11-04:00</updated>
-  <id>http://blog.seankaiser.com//</id>
+  <link href="http://blog.seankaiser.com/atom.xml" rel="self"/>
+  <link href="http://blog.seankaiser.com/"/>
+  <updated>2013-05-01T15:25:41-04:00</updated>
+  <id>http://blog.seankaiser.com/</id>
   <author>
     <name><![CDATA[Sean Kaiser]]></name>
     
@@ -15,12 +15,12 @@
   
   <entry>
     <title type="html"><![CDATA[The Big Project- Preparing the machines for deployment with DeployStudio]]></title>
-    <link href="http://blog.seankaiser.com//2013/01/31/the-big-project-preparing-the-machines-for-de/"/>
+    <link href="http://blog.seankaiser.com/2013/01/31/the-big-project-preparing-the-machines-for-de/"/>
     <updated>2013-01-31T06:00:00-05:00</updated>
-    <id>http://blog.seankaiser.com//2013/01/31/the-big-project-preparing-the-machines-for-de</id>
+    <id>http://blog.seankaiser.com/2013/01/31/the-big-project-preparing-the-machines-for-de</id>
     <content type="html"><![CDATA[<h2>Previously on &#8220;The Big Project&#8221;</h2>
 
-<p>In <a href="http://blog.seankaiser.com//blog/2013/01/15/were-doing-what-and-on-what-timeline/">part 1</a> of this series, I provided an overview of what I now call &#8220;The Big Project.&#8221; <a href="http://blog.seankaiser.com//blog/2013/01/22/the-big-project-setting-the-stage/">Part 2</a> talked about the importance of inventorying. This article is the first of a series of more detailed technical articles describing various aspects and the tools we used to pull off this project. FIrst up&#8230;</p>
+<p>In <a href="http://blog.seankaiser.com/blog/2013/01/15/were-doing-what-and-on-what-timeline/">part 1</a> of this series, I provided an overview of what I now call &#8220;The Big Project.&#8221; <a href="http://blog.seankaiser.com/blog/2013/01/22/the-big-project-setting-the-stage/">Part 2</a> talked about the importance of inventorying. This article is the first of a series of more detailed technical articles describing various aspects and the tools we used to pull off this project. FIrst up&#8230;</p>
 
 <h2>DeployStudio</h2>
 
@@ -87,9 +87,9 @@
   
   <entry>
     <title type="html"><![CDATA[The Big Project- Setting the Stage by Inventorying]]></title>
-    <link href="http://blog.seankaiser.com//2013/01/22/the-big-project-setting-the-stage/"/>
+    <link href="http://blog.seankaiser.com/2013/01/22/the-big-project-setting-the-stage/"/>
     <updated>2013-01-22T07:37:00-05:00</updated>
-    <id>http://blog.seankaiser.com//2013/01/22/the-big-project-setting-the-stage</id>
+    <id>http://blog.seankaiser.com/2013/01/22/the-big-project-setting-the-stage</id>
     <content type="html"><![CDATA[<h2>A small detour</h2>
 
 <p>I was going to keep this article for near the end of the series, but then it might imply that the prep work wasn&#8217;t important. This is wrong. It&#8217;s very important, and in our case just as critical as the deployment tools themselves. I&#8217;d guess this is (or should be) the case everywhere.</p>
@@ -115,9 +115,9 @@
   
   <entry>
     <title type="html"><![CDATA[The Big Project- We're doing what, and on what timeline?!?]]></title>
-    <link href="http://blog.seankaiser.com//2013/01/15/were-doing-what-and-on-what-timeline/"/>
+    <link href="http://blog.seankaiser.com/2013/01/15/were-doing-what-and-on-what-timeline/"/>
     <updated>2013-01-15T12:30:00-05:00</updated>
-    <id>http://blog.seankaiser.com//2013/01/15/were-doing-what-and-on-what-timeline</id>
+    <id>http://blog.seankaiser.com/2013/01/15/were-doing-what-and-on-what-timeline</id>
     <content type="html"><![CDATA[<h2>The project</h2>
 
 <p>Deploy 1170 MacBook Pros (later amended to 1250), 60 iMacs, 214 Apple TVs, 106 (full sized) new iPads, and 30 iPad minis. Relocate 100 or so &#8220;newer&#8221; (one or two year old) machines into different locations, either in different classrooms in the same building or to a different building. Retrieve nearly 1700 old machines (iBooks, eMacs, iMacs, Mac Minis, MacBooks) back to the warehouse for disposal. And do all of this in roughly 3 weeks (once the computers started arriving.)</p>
@@ -147,9 +147,9 @@
   
   <entry>
     <title type="html"><![CDATA[Cross-domain contact sharing in Google Apps]]></title>
-    <link href="http://blog.seankaiser.com//2011/04/06/cross-domain-contact-sharing-in-google-apps/"/>
+    <link href="http://blog.seankaiser.com/2011/04/06/cross-domain-contact-sharing-in-google-apps/"/>
     <updated>2011-04-06T20:49:00-04:00</updated>
-    <id>http://blog.seankaiser.com//2011/04/06/cross-domain-contact-sharing-in-google-apps</id>
+    <id>http://blog.seankaiser.com/2011/04/06/cross-domain-contact-sharing-in-google-apps</id>
     <content type="html"><![CDATA[<h2>A bit of background</h2>
 
 <p>For our Google Apps implementation, we are using two different domains: one for staff and one for students. This was recommended to us by others, and we already owned the domains, so it made sense. The problem with this approach is that the user directory that allows users within a domain to simply type in a user&#8217;s name and then select their address from a list doesn&#8217;t work when some users are in one domain and the rest are in the other. Sure, each user could create the contacts in their personal contacts list, but for a teacher to create a new contact for each of their students would take considerable time. They&#8217;d also have to have access to the user list to know what the student email addresses are.</p>
@@ -215,9 +215,9 @@
   
   <entry>
     <title type="html"><![CDATA[Getting started]]></title>
-    <link href="http://blog.seankaiser.com//2011/04/06/getting-started/"/>
+    <link href="http://blog.seankaiser.com/2011/04/06/getting-started/"/>
     <updated>2011-04-06T18:28:00-04:00</updated>
-    <id>http://blog.seankaiser.com//2011/04/06/getting-started</id>
+    <id>http://blog.seankaiser.com/2011/04/06/getting-started</id>
     <content type="html"><![CDATA[<p>This is my first time doing any sort of blogging. I&#8217;m going to try to provide technical writeups on major projects that I work on. We&#8217;ll see how it goes. I&#8217;m not the best writer or communicator. I ramble. A lot. If you can get through that, hopefully you&#8217;ll be able to find a small nugget of information that helps you in your job or life.</p>
 
 <p>My current focus is moving our district from First Class email to Google Apps for Education. In First Class, we provided email accounts for most staff, but no students. Each staff member had a limited amount of disk space available for their email and a simple website. Now, staff will have tons of space for email, virtually unlimited space for documents, and the ability to have multiple websites. On top of all of that, we&#8217;re providing accounts for our students to do the same thing. All of a sudden, instead of supporting around 650 or so email users, we&#8217;re going to be supporting nearly 7000 email, docs, etc. users. You know what the best part is? Our department has learned a ton, has come together like never before, and we&#8217;re pumped.</p>

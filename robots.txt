@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://blog.seankaiser.com//sitemap.xml 
+Sitemap: http://blog.seankaiser.com/sitemap.xml 
