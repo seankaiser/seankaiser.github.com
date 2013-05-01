@@ -4,7 +4,7 @@
   <title><![CDATA[Category: google apps | Stuff Sean Shares]]></title>
   <link href="http://seankaiser.github.io/blog/categories/google-apps/atom.xml" rel="self"/>
   <link href="http://seankaiser.github.io/"/>
-  <updated>2013-05-01T10:18:57-04:00</updated>
+  <updated>2013-05-01T10:21:27-04:00</updated>
   <id>http://seankaiser.github.io/</id>
   <author>
     <name><![CDATA[Sean Kaiser]]></name>
@@ -33,7 +33,7 @@
 <p>Once you've got things installed, you will want to export your domains' contact directories. From the gscc directory, you'll want to run the command</p>
 
 <p><code>
-  python shared_contacts_profiles.py --admin=your-admin-login@domain1.com --export=domain1.csv
+$ python shared_contacts_profiles.py --admin=your-admin-login@domain1.com --export=domain1.csv
 </code></p>
 
 <p>(You'll need to change the administrative account and the export file name as you see fit.)</p>
@@ -45,7 +45,7 @@
 <p>The first couple of fields in each record are the action and id fields. The export files are meant to update existing contacts, rather than add them to the directory. As exported, the action is always update, and the id is the username. When adding a record to a domain, the action should be add (hopefully I didn't just lose you there.) As I discovered today, when you're adding a contact, the id field must be empty. How you choose to change this is up to you. You could open the file in Excel (yuck) to do a find &amp; replace to change update to add, then clear the id column out. Or you could run the command</p>
 
 <p><code>
-  sed 's/^update,[a-z]*,/add,,/' &lt; domain1.csv &gt; domain1-fixed.csv
+$ sed 's/^update,[a-z]*,/add,,/' &lt; domain1.csv &gt; domain1-fixed.csv
 </code></p>
 
 <p>(This command assumes that your usernames are all lower case and don't have special characters or numbers. If that's not the case for you, you'll need to change the sed command.)</p>
@@ -57,7 +57,7 @@
 <p>The final step is to import the contact directory into the other domain. It's simple. From the gscc directory, run the command</p>
 
 <p><code>
-  python shared_contacts_profiles.py --admin=your-admin-login@domain1.com --import=domain2-fixed.csv
+$ python shared_contacts_profiles.py --admin=your-admin-login@domain1.com --import=domain2-fixed.csv
 </code></p>
 
 <p>(4/12/2011: fixed above command to reflect --import instead of --export)</p>

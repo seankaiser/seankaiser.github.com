@@ -313,7 +313,7 @@
 <p>Once you&#8217;ve got things installed, you will want to export your domains&#8217; contact directories. From the gscc directory, you&#8217;ll want to run the command</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  python shared_contacts_profiles.py --admin=your-admin-login@domain1.com --export=domain1.csv</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ python shared_contacts_profiles.py --admin=your-admin-login@domain1.com --export=domain1.csv</span></code></pre></td></tr></table></div></figure>
 
 
 <p>(You&#8217;ll need to change the administrative account and the export file name as you see fit.)</p>
@@ -325,7 +325,7 @@
 <p>The first couple of fields in each record are the action and id fields. The export files are meant to update existing contacts, rather than add them to the directory. As exported, the action is always update, and the id is the username. When adding a record to a domain, the action should be add (hopefully I didn&#8217;t just lose you there.) As I discovered today, when you&#8217;re adding a contact, the id field must be empty. How you choose to change this is up to you. You could open the file in Excel (yuck) to do a find &amp; replace to change update to add, then clear the id column out. Or you could run the command</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  sed 's/^update,[a-z]*,/add,,/' &lt; domain1.csv &gt; domain1-fixed.csv</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sed 's/^update,[a-z]*,/add,,/' &lt; domain1.csv &gt; domain1-fixed.csv</span></code></pre></td></tr></table></div></figure>
 
 
 <p>(This command assumes that your usernames are all lower case and don&#8217;t have special characters or numbers. If that&#8217;s not the case for you, you&#8217;ll need to change the sed command.)</p>
@@ -337,7 +337,7 @@
 <p>The final step is to import the contact directory into the other domain. It&#8217;s simple. From the gscc directory, run the command</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  python shared_contacts_profiles.py --admin=your-admin-login@domain1.com --import=domain2-fixed.csv</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ python shared_contacts_profiles.py --admin=your-admin-login@domain1.com --import=domain2-fixed.csv</span></code></pre></td></tr></table></div></figure>
 
 
 <p>(4/12/2011: fixed above command to reflect &#8211;import instead of &#8211;export)</p>
