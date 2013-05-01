@@ -4,7 +4,7 @@
   <title><![CDATA[Category: macadmin | Stuff Sean Shares]]></title>
   <link href="http://seankaiser.github.io/blog/categories/macadmin/atom.xml" rel="self"/>
   <link href="http://seankaiser.github.io/"/>
-  <updated>2013-05-01T09:59:15-04:00</updated>
+  <updated>2013-05-01T10:04:20-04:00</updated>
   <id>http://seankaiser.github.io/</id>
   <author>
     <name><![CDATA[Sean Kaiser]]></name>
@@ -18,17 +18,17 @@
     <link href="http://seankaiser.github.io/blog/2013/01/31/the-big-project-preparing-the-machines-for-de/"/>
     <updated>2013-01-31T06:00:00-05:00</updated>
     <id>http://seankaiser.github.io/blog/2013/01/31/the-big-project-preparing-the-machines-for-de</id>
-    <content type="html"><![CDATA[<p>Previously on "The Big Project"</p>
+    <content type="html"><![CDATA[<h2>Previously on "The Big Project"</h2>
 
 <p>In <a href="/blog/2013/01/15/were-doing-what-and-on-what-timeline/">part 1</a> &nbsp;of this series, I provided an overview of what I now call "The Big Project." <a href="/blog/2013/01/22/the-big-project-setting-the-stage/">Part 2</a>  talked about the importance of inventorying. This article is the first of a series of more detailed technical articles describing various aspects and the tools we used to pull off this project. FIrst up...</p>
 
-<p>DeployStudio</p>
+<h2>DeployStudio</h2>
 
 <p>We've been using DeployStudio for several years to help us image machines. In the (relatively distant) past, we restored full monolithic images to machines, new or old. Over the past almost two years, we've switched to the thin imaging model. Thin imaging is a method of preserving the contents of a machine's hard drive and deploying either site specific applications or deployment tools to facilitate the installation of such applications and other files in an effort to minimize the amount of time needed to get a machine ready for a user. In our case, we deploy our deployment tools (puppet and munki) and some basic settings. This cuts down on the deployment cost, in both time and bits traveling across the network.</p>
 
 <p>In situations where we need to reimage a machine, we have a workflow that lays down an InstaDMG created vanilla image and then runs the normal thin imaging workflow.</p>
 
-<p>The thin imaging workflow</p>
+<h2>The thin imaging workflow</h2>
 
 <p>When we "Northmont-ize a new machine" (the name of our thin imaging workflow), DeployStudio performs the initial basic setup fo our machines. Everything is rather basic at this point. The workflow does the following:</p>
 
@@ -51,7 +51,7 @@
 
 <p>All of our workflows run as "postponed installations". Is this necessary? For some steps, such as installing packages, it seems to work better. Since I'm doing a postponed install for some things, I decided to do it for all steps.</p>
 
-<p>Full reimage workflow</p>
+<h2>Full reimage workflow</h2>
 
 <p>If we do actually deploy a new image, it's usually because something has gone wrong on the machine or we've simply replaced the hard drive. I've used InstaDMG to create a vanila 10.6, 10.7, and 10.8 image. Since we have 6 elementary schools, a middle school, a high school, a service center (where my department's offices are), and the administrative office, each with their own LAN and only a 25 mbps WAN link back to the datacenter, I've implemented a modified version of a strategy I discovered a couple of years ago to have a <a href="http://www.deploystudio.com/Forums/viewtopic.php?pid=2614">central DeployStudio server with local images repositories</a> . (I know DeployStudio now offers a synchronization process, but I've never looked into it. This process works well for us. And, remember from part 1, one of the steps I had to complete to start this project was to update DeployStudio and its NetBoot image... I doubt that prior to a month and a half ago that the version we were running offered synchronization.)</p>
 
@@ -64,7 +64,7 @@
 </ul>
 
 
-<p>The logistics of prepping 1200+ machines</p>
+<h2>The logistics of prepping 1200+ machines</h2>
 
 <p>We wanted our machines to be usable as soon as we deployed them so as to cut down on the amount of time we were in the schools. (In one case, we actually replaced a school's computers as the students cycled through lunch, which at that school's was about an hour and a half.)</p>
 
@@ -76,9 +76,7 @@
 
 <p>Another benefit of thin imaging and using tools like puppet and munki is that as things change, things need to be added, etc., you've got a system in place that will handle that, automatically. You don't need to rebuild your image.</p>
 
-<p>What's coming up</p>
-
-<p>&nbsp;</p>
+<h2>What's coming up</h2>
 
 <p>I'll have dedicated articles on our puppet and munki configurations, a brief discussion on how I'm using luggage to package printer installers and repackage applications that don't come with good installers, some tips on inventorying machines, and some scripts that I've written to tie everything together, and finally reposado, in that general order.</p>
 ]]></content>
