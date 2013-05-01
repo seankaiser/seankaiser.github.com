@@ -4,7 +4,7 @@
   <title><![CDATA[Category: the big project | Stuff Sean Shares]]></title>
   <link href="http://seankaiser.github.io/blog/categories/the-big-project/atom.xml" rel="self"/>
   <link href="http://seankaiser.github.io/"/>
-  <updated>2013-05-01T09:56:03-04:00</updated>
+  <updated>2013-05-01T09:59:15-04:00</updated>
   <id>http://seankaiser.github.io/</id>
   <author>
     <name><![CDATA[Sean Kaiser]]></name>
@@ -20,7 +20,7 @@
     <id>http://seankaiser.github.io/blog/2013/01/31/the-big-project-preparing-the-machines-for-de</id>
     <content type="html"><![CDATA[<p>Previously on "The Big Project"</p>
 
-<p>In <a href="http://seankaiser.posterous.com/were-doing-what-and-on-what-timeline">part 1</a> &nbsp;of this series, I provided an overview of what I now call "The Big Project." <a href="http://seankaiser.posterous.com/the-big-project-setting-the-stage">Part 2</a>  talked about the importance of inventorying. This article is the first of a series of more detailed technical articles describing various aspects and the tools we used to pull off this project. FIrst up...</p>
+<p>In <a href="/blog/2013/01/15/were-doing-what-and-on-what-timeline/">part 1</a> &nbsp;of this series, I provided an overview of what I now call "The Big Project." <a href="/blog/2013/01/22/the-big-project-setting-the-stage/">Part 2</a>  talked about the importance of inventorying. This article is the first of a series of more detailed technical articles describing various aspects and the tools we used to pull off this project. FIrst up...</p>
 
 <p>DeployStudio</p>
 
