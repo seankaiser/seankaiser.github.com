@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: macadmin | Sean Kaiser (dot) com]]></title>
-  <link href="http://blog.seankaiser.com/blog/categories/macadmin/atom.xml" rel="self"/>
-  <link href="http://blog.seankaiser.com/"/>
-  <updated>2013-05-02T11:03:36-04:00</updated>
-  <id>http://blog.seankaiser.com/</id>
+  <link href="http://seankaiser.com/blog/categories/macadmin/atom.xml" rel="self"/>
+  <link href="http://seankaiser.com/"/>
+  <updated>2013-05-12T01:49:45-04:00</updated>
+  <id>http://seankaiser.com/</id>
   <author>
     <name><![CDATA[Sean Kaiser]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[The Big Project- Preparing the machines for deployment with DeployStudio]]></title>
-    <link href="http://blog.seankaiser.com/2013/01/31/the-big-project-preparing-the-machines-for-de/"/>
+    <link href="http://seankaiser.com/blog/2013/01/31/the-big-project-preparing-the-machines-for-de/"/>
     <updated>2013-01-31T06:00:00-05:00</updated>
-    <id>http://blog.seankaiser.com/2013/01/31/the-big-project-preparing-the-machines-for-de</id>
+    <id>http://seankaiser.com/blog/2013/01/31/the-big-project-preparing-the-machines-for-de</id>
     <content type="html"><![CDATA[<h2>Previously on "The Big Project"</h2>
 
 <p>In <a href="/blog/2013/01/15/were-doing-what-and-on-what-timeline/">part 1</a> of this series, I provided an overview of what I now call "The Big Project." <a href="/blog/2013/01/22/the-big-project-setting-the-stage/">Part 2</a> talked about the importance of inventorying. This article is the first of a series of more detailed technical articles describing various aspects and the tools we used to pull off this project. FIrst up...</p>
@@ -87,9 +87,9 @@
   
   <entry>
     <title type="html"><![CDATA[The Big Project- Setting the Stage by Inventorying]]></title>
-    <link href="http://blog.seankaiser.com/2013/01/22/the-big-project-setting-the-stage/"/>
+    <link href="http://seankaiser.com/blog/2013/01/22/the-big-project-setting-the-stage/"/>
     <updated>2013-01-22T07:37:00-05:00</updated>
-    <id>http://blog.seankaiser.com/2013/01/22/the-big-project-setting-the-stage</id>
+    <id>http://seankaiser.com/blog/2013/01/22/the-big-project-setting-the-stage</id>
     <content type="html"><![CDATA[<h2>A small detour</h2>
 
 <p>I was going to keep this article for near the end of the series, but then it might imply that the prep work wasn't important. This is wrong. It's very important, and in our case just as critical as the deployment tools themselves. I'd guess this is (or should be) the case everywhere.</p>
@@ -115,9 +115,9 @@
   
   <entry>
     <title type="html"><![CDATA[The Big Project- We're doing what, and on what timeline?!?]]></title>
-    <link href="http://blog.seankaiser.com/2013/01/15/were-doing-what-and-on-what-timeline/"/>
+    <link href="http://seankaiser.com/blog/2013/01/15/were-doing-what-and-on-what-timeline/"/>
     <updated>2013-01-15T12:30:00-05:00</updated>
-    <id>http://blog.seankaiser.com/2013/01/15/were-doing-what-and-on-what-timeline</id>
+    <id>http://seankaiser.com/blog/2013/01/15/were-doing-what-and-on-what-timeline</id>
     <content type="html"><![CDATA[<h2>The project</h2>
 
 <p>Deploy 1170 MacBook Pros (later amended to 1250), 60 iMacs, 214 Apple TVs, 106 (full sized) new iPads, and 30 iPad minis. Relocate 100 or so "newer" (one or two year old) machines into different locations, either in different classrooms in the same building or to a different building. Retrieve nearly 1700 old machines (iBooks, eMacs, iMacs, Mac Minis, MacBooks) back to the warehouse for disposal. And do all of this in roughly 3 weeks (once the computers started arriving.)</p>
