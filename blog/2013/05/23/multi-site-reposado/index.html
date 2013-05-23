@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Getting started - Sean Kaiser (dot) com</title>
+  <title>Multi-site reposado - Sean Kaiser (dot) com</title>
   <meta name="author" content="Sean Kaiser">
 
   
-  <meta name="description" content="This is my first time doing any sort of blogging. I&#8217;m going to try to provide technical writeups on major projects that I work on. We&#8217;ll &hellip;">
+  <meta name="description" content="A conundrum Let&#8217;s say you work in an environment where you&#8217;re running reposado. Let&#8217;s also say that your environment consists of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://seankaiser.com/blog/2011/04/06/getting-started">
+  <link rel="canonical" href="http://seankaiser.com/blog/2013/05/23/multi-site-reposado">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Sean Kaiser (dot) com" type="application/atom+xml">
@@ -68,7 +68,7 @@
   
   <header>
     
-      <h1 class="entry-title">Getting Started</h1>
+      <h1 class="entry-title">Multi-site Reposado</h1>
     
     
       <p class="meta">
@@ -84,18 +84,40 @@
   
 
 
-<time datetime="2011-04-06T18:28:00-04:00" pubdate data-updated="true">Apr 6<span>th</span>, 2011</time>
+<time datetime="2013-05-23T09:23:00-04:00" pubdate data-updated="true">May 23<span>rd</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>This is my first time doing any sort of blogging. I&#8217;m going to try to provide technical writeups on major projects that I work on. We&#8217;ll see how it goes. I&#8217;m not the best writer or communicator. I ramble. A lot. If you can get through that, hopefully you&#8217;ll be able to find a small nugget of information that helps you in your job or life.</p>
+<div class="entry-content"><h2>A conundrum</h2>
 
-<p>My current focus is moving our district from First Class email to Google Apps for Education. In First Class, we provided email accounts for most staff, but no students. Each staff member had a limited amount of disk space available for their email and a simple website. Now, staff will have tons of space for email, virtually unlimited space for documents, and the ability to have multiple websites. On top of all of that, we&#8217;re providing accounts for our students to do the same thing. All of a sudden, instead of supporting around 650 or so email users, we&#8217;re going to be supporting nearly 7000 email, docs, etc. users. You know what the best part is? Our department has learned a ton, has come together like never before, and we&#8217;re pumped.</p>
+<p>Let&#8217;s say you work in an environment where you&#8217;re running <a href="https://github.com/wdas/reposado">reposado</a>. Let&#8217;s also say that your environment consists of several locations with relatively slow WAN links between them. Let&#8217;s also say that some of your users roam between locations, and when they move, they just put their MacBooks (or Airs or Pros) to sleep instead of shutting down (because who shuts their machine down every time they&#8217;re not using their machine?)</p>
 
-<p>With that focus, most of my initial posts will be related to this migration. Over time, posts will shift from one technology to another, from desktop management to network infrastructure to who knows what, and back and forth. If my work inspires even one person, or even just helps save someone some time or their job, I&#8217;ll be happy. If not, I&#8217;ll still be happy. My life is good.</p>
+<p>You want to point the machine to the reposado server, but you don&#8217;t want the machine to download updates over the slow WAN link, and while you could run a reposado server at each location, but by configuring the machine to look at an onsite reposado server, the machine will likely move to another location before softwareupdate checks for updates.</p>
+
+<p>You&#8217;re running <a href="https://code.google.com/p/munki/">munki</a> and have it set to install Apple software updates? Awesome. You could set the appropriate <figure>CatalogURL</figure> in your <figure>preflight</figure> script, but that means that you have to maintain catalog files on several reposado servers, and who wants to do that? (Ok, you could just clone the master reposado server, including the catalog files to get around that last part.) But what happens if the user has the ability to install Apple software updates via Software Update from the Apple menu (or by running <figure>softwareupdate</figure> itself)? Their machine might have their previous location&#8217;s <figure>CatalogURL</figure> set&#8230;</p>
+
+<h2>What do you do?</h2>
+
+<p>Since <figure>/Library/Preferences/com.apple.SoftwareUpdate.plist</figure> doesn&#8217;t allow you to configure a <figure>PkgURL</figure> like munki does, everything goes to the server that the catalog file defined by <figure>CatalogURL</figure> goes to. But that&#8217;s the problem.</p>
+
+<p>The workaround? You set up redirects on the master reposado server based on the client&#8217;s IP address. It seems simple, but I haven&#8217;t found any references to anyone else doing this. Interested? Great. Let&#8217;s set it up.</p>
+
+<h2>The setup</h2>
+
+<p>First of all, if you&#8217;re going to get this working, you&#8217;re going to have to clone your reposado server to a server at your different locations. Just copy the <figure>reposado/html/content</figure> folder to the other server(s) and set up apache on that server to point to the <figure>repsado/html</figure> folder as the root folder for the site.</p>
+
+<p>I&#8217;m going to assume that you have probably already enabled <figure>mod_rewrite</figure> to handle the <a href="https://code.google.com/p/munki/">.sucatalog redirects</a> so you can set one CatalogURL regardless of what OS the client machine is running. If you haven&#8217;t done that yet, I&#8217;ll wait for you to go do it. It&#8217;s that awesome. Seriously.</p>
+
+<p>Once you&#8217;ve got mod_rewrite enabled and your <figure>.htaccess</figure> file in place (in <figure>reposado/html</figure>), you need to configure the redirects for your different locations. Using a tool like Google&#8217;s <a href="https://github.com/wdas/reposado/blob/master/docs/URL_rewrites.txt">IP address range tool</a>, you can build your regular expression rules. You then copy those regular expressions into your <figure>.htaccess</figure> file and it looks something like this:</p>
+
+<div><script src='https://gist.github.com/5636281.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>Seems simple, right? It is. It&#8217;s just a different way of thinking about things. And it resolves issues related to using different mechanisms to run software update.</p>
 </div>
 
 
@@ -118,12 +140,12 @@
   
 
 
-<time datetime="2011-04-06T18:28:00-04:00" pubdate data-updated="true">Apr 6<span>th</span>, 2011</time>
+<time datetime="2013-05-23T09:23:00-04:00" pubdate data-updated="true">May 23<span>rd</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/work/'>work</a>
+    <a class='category' href='/blog/categories/macadmin/'>macadmin,</a>, <a class='category' href='/blog/categories/reposado/'>reposado</a>, <a class='category' href='/blog/categories/work/'>work,</a>
   
 </span>
 
@@ -132,7 +154,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://seankaiser.com/blog/2011/04/06/getting-started/" data-via="seankaiser" data-counturl="http://seankaiser.com/blog/2011/04/06/getting-started/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://seankaiser.com/blog/2013/05/23/multi-site-reposado/" data-via="seankaiser" data-counturl="http://seankaiser.com/blog/2013/05/23/multi-site-reposado/" >Tweet</a>
   
   
   
@@ -141,8 +163,8 @@
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/blog/2013/01/31/the-big-project-preparing-the-machines-for-de/" title="Previous Post: The Big Project- Preparing the machines for deployment with DeployStudio">&laquo; The Big Project- Preparing the machines for deployment with DeployStudio</a>
       
-        <a class="basic-alignment right" href="/blog/2011/04/06/cross-domain-contact-sharing-in-google-apps/" title="Next Post: Cross-domain contact sharing in Google Apps">Cross-domain contact sharing in Google Apps &raquo;</a>
       
     </p>
   </footer>
