@@ -4,7 +4,7 @@
   <title><![CDATA[Category: reposado | Sean Kaiser (dot) com]]></title>
   <link href="http://seankaiser.com/blog/categories/reposado/atom.xml" rel="self"/>
   <link href="http://seankaiser.com/"/>
-  <updated>2013-05-23T10:22:05-04:00</updated>
+  <updated>2013-05-23T10:23:24-04:00</updated>
   <id>http://seankaiser.com/</id>
   <author>
     <name><![CDATA[Sean Kaiser]]></name>
@@ -24,21 +24,21 @@
 
 <p>You want to point the machine to the reposado server, but you don't want the machine to download updates over the slow WAN link, and while you could run a reposado server at each location, but by configuring the machine to look at an onsite reposado server, the machine will likely move to another location before softwareupdate checks for updates.</p>
 
-<p>You're running <a href="https://code.google.com/p/munki/">munki</a> and have it set to install Apple software updates? Awesome. You could set the appropriate <figure>CatalogURL</figure> in your <figure>preflight</figure> script, but that means that you have to maintain catalog files on several reposado servers, and who wants to do that? (Ok, you could just clone the master reposado server, including the catalog files to get around that last part.) But what happens if the user has the ability to install Apple software updates via Software Update from the Apple menu (or by running <figure>softwareupdate</figure> itself)? Their machine might have their previous location's <figure>CatalogURL</figure> set...</p>
+<p>You're running <a href="https://code.google.com/p/munki/">munki</a> and have it set to install Apple software updates? Awesome. You could set the appropriate <code>CatalogURL</code> in your <code>preflight</code> script, but that means that you have to maintain catalog files on several reposado servers, and who wants to do that? (Ok, you could just clone the master reposado server, including the catalog files to get around that last part.) But what happens if the user has the ability to install Apple software updates via Software Update from the Apple menu (or by running <code>softwareupdate</code> itself)? Their machine might have their previous location's <code>CatalogURL</code> set...</p>
 
 <h2>What do you do?</h2>
 
-<p>Since <figure>/Library/Preferences/com.apple.SoftwareUpdate.plist</figure> doesn't allow you to configure a <figure>PkgURL</figure> like munki does, everything goes to the server that the catalog file defined by <figure>CatalogURL</figure> goes to. But that's the problem.</p>
+<p>Since <code>/Library/Preferences/com.apple.SoftwareUpdate.plist</code> doesn't allow you to concode a <code>PkgURL</code> like munki does, everything goes to the server that the catalog file defined by <code>CatalogURL</code> goes to. But that's the problem.</p>
 
 <p>The workaround? You set up redirects on the master reposado server based on the client's IP address. It seems simple, but I haven't found any references to anyone else doing this. Interested? Great. Let's set it up.</p>
 
 <h2>The setup</h2>
 
-<p>First of all, if you're going to get this working, you're going to have to clone your reposado server to a server at your different locations. Just copy the <figure>reposado/html/content</figure> folder to the other server(s) and set up apache on that server to point to the <figure>repsado/html</figure> folder as the root folder for the site.</p>
+<p>First of all, if you're going to get this working, you're going to have to clone your reposado server to a server at your different locations. Just copy the <code>reposado/html/content</code> folder to the other server(s) and set up apache on that server to point to the <code>repsado/html</code> folder as the root folder for the site.</p>
 
-<p>I'm going to assume that you have probably already enabled <figure>mod_rewrite</figure> to handle the <a href="https://code.google.com/p/munki/">.sucatalog redirects</a> so you can set one CatalogURL regardless of what OS the client machine is running. If you haven't done that yet, I'll wait for you to go do it. It's that awesome. Seriously.</p>
+<p>I'm going to assume that you have probably already enabled <code>mod_rewrite</code> to handle the <a href="https://code.google.com/p/munki/">.sucatalog redirects</a> so you can set one CatalogURL regardless of what OS the client machine is running. If you haven't done that yet, I'll wait for you to go do it. It's that awesome. Seriously.</p>
 
-<p>Once you've got mod_rewrite enabled and your <figure>.htaccess</figure> file in place (in <figure>reposado/html</figure>), you need to configure the redirects for your different locations. Using a tool like Google's <a href="https://github.com/wdas/reposado/blob/master/docs/URL_rewrites.txt">IP address range tool</a>, you can build your regular expression rules. You then copy those regular expressions into your <figure>.htaccess</figure> file and it looks something like this:</p>
+<p>Once you've got mod_rewrite enabled and your <code>.htaccess</code> file in place (in <code>reposado/html</code>), you need to concode the redirects for your different locations. Using a tool like Google's <a href="https://github.com/wdas/reposado/blob/master/docs/URL_rewrites.txt">IP address range tool</a>, you can build your regular expression rules. You then copy those regular expressions into your <code>.htaccess</code> file and it looks something like this:</p>
 
 <p><div><script src='https://gist.github.com/5636281.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
