@@ -4,7 +4,7 @@
   <title><![CDATA[Sean Kaiser (dot) com]]></title>
   <link href="http://seankaiser.com/atom.xml" rel="self"/>
   <link href="http://seankaiser.com/"/>
-  <updated>2013-05-24T01:29:57-04:00</updated>
+  <updated>2013-05-24T02:18:53-04:00</updated>
   <id>http://seankaiser.com/</id>
   <author>
     <name><![CDATA[Sean Kaiser]]></name>
@@ -52,6 +52,9 @@
 <p>Since <code>/Library/Preferences/com.apple.SoftwareUpdate.plist</code> doesn&#8217;t allow you to configure a <code>PkgURL</code> like munki does, everything goes to the server that the catalog file defined by <code>CatalogURL</code> goes to. But that&#8217;s the problem.</p>
 
 <p>The workaround? You set up redirects on the master reposado server based on the client&#8217;s IP address. It seems simple, but I haven&#8217;t found any references to anyone else doing this. Interested? Great. Let&#8217;s set it up.</p>
+
+<!-- more -->
+
 
 <h2>The setup</h2>
 
