@@ -142,10 +142,14 @@
 
 <p>As you&#8217;re setting things up, you&#8217;ll want to run this script manually, and you&#8217;ll be prompted to run the script with the <code>initialize</code> argument, which will tell the script to run autopkg with your recipe list twice, the second of which will save the output information to the default log location for later reference. You should also manually run the script with the <code>initialize</code> option if you change the recipe list, since that will change the output.</p>
 
-<p>Once you&#8217;ve run the script manually, you&#8217;re ready to set the script to run autoatically, either via cron or launchd. Obviously Apple wants you to run things via launchd, but it will work just fine as a cron job. An <a href="https://github.com/seankaiser/automation-scripts/blob/master/autopkg/autopkg-wrapper.sh">example launchd plist file</a> is available in my github repository. You&#8217;ll need to modify the plist to meet your needs. It assumes the following:
- - the <code>autopkg-wrapper.sh</code> script lives in <code>/usr/local/bin</code>,
- - the user who runs the script is <code>autopkg</code>,
- - you want the script to run hourly, at the top of the hour.</p>
+<p>Once you&#8217;ve run the script manually, you&#8217;re ready to set the script to run autoatically, either via cron or launchd. Obviously Apple wants you to run things via launchd, but it will work just fine as a cron job. An <a href="https://github.com/seankaiser/automation-scripts/blob/master/autopkg/autopkg-wrapper.sh">example launchd plist file</a> is available in my github repository. You&#8217;ll need to modify the plist to meet your needs. It assumes the following:</p>
+
+<ul>
+<li>the <code>autopkg-wrapper.sh</code> script lives in <code>/usr/local/bin</code>,</li>
+<li>the user who runs the script is <code>autopkg</code>,</li>
+<li>you want the script to run hourly, at the top of the hour.</li>
+</ul>
+
 
 <p>If you&#8217;re using the launchd plist, be sure to load it via something like <code>launchctl load /Library/LaunchDaemons/com.example.autopkg-wrapper.plist</code> (or reboot your machine, which will force the plist to be loaded on boot.)</p>
 
@@ -224,7 +228,6 @@
 <span class='line-number'>67</span>
 <span class='line-number'>68</span>
 <span class='line-number'>69</span>
-<span class='line-number'>70</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/sh
 </span><span class='line'>
 </span><span class='line'># autopkg automation script which, when run with no arguments, checks current run's output against a default output and sends the output to a user if there are differences
@@ -246,12 +249,6 @@
 </span><span class='line'>  echo "usage: ${0} [initialize]"
 </span><span class='line'>  echo "(initializes a new default log for notification checking)"
 </span><span class='line'>  exit 0
-</span><span class='line'>
-</span><span class='line'>elif [ ! -f "${user_home_dir}"/Documents/autopkg/autopkg.out ]; then
-</span><span class='line'>  # default log doesn't exist, so tell user to run this script in initialization mode and exit
-</span><span class='line'>  echo "ERROR: default log does not exist, please run this script with initialize argument to initialize the log"
-</span><span class='line'>  exit -1
-</span><span class='line'>
 </span><span class='line'>
 </span><span class='line'>elif [ "${1}" == "initialize" ]; then
 </span><span class='line'>  # initialize default log for automated run to check against for notification if things have changed
@@ -276,6 +273,11 @@
 </span><span class='line'>  /usr/local/bin/autopkg run ${recipe_list} 2>&1 > "${user_home_dir}"/Documents/autopkg/autopkg.out
 </span><span class='line'>
 </span><span class='line'>  $logger "finished autopkg"
+</span><span class='line'>
+</span><span class='line'>elif [ ! -f "${user_home_dir}"/Documents/autopkg/autopkg.out ]; then
+</span><span class='line'>  # default log doesn't exist, so tell user to run this script in initialization mode and exit
+</span><span class='line'>  echo "ERROR: default log does not exist, please run this script with initialize argument to initialize the log"
+</span><span class='line'>  exit -1
 </span><span class='line'>
 </span><span class='line'>else
 </span><span class='line'>  # default is to just run autopkg and email log if something changed from normal
