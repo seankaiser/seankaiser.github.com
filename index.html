@@ -9,7 +9,7 @@
   <meta name="author" content="Sean Kaiser">
 
   
-  <meta name="description" content="Slides from my presentation at PSU Mac Admins Conference 2013 If you were in my presentation, or even if you weren&#8217;t, and would like a copy of &hellip;">
+  <meta name="description" content="AutoPkg change notifications Background We use AutoPkg to automatically download (and process into munki) updates to our commonly installed &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/16/autopkg-change-notifications/">AutoPkg Change Notifications</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-16T22:01:00-05:00" pubdate data-updated="true">Dec 16<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/12/16/autopkg-change-notifications/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>AutoPkg change notifications</h2>
+
+<h1>Background</h1>
+
+<p>We use <a href="https://github.com/autopkg/autopkg">AutoPkg</a> to automatically download (and process into <a href="http://code.google.com/p/munki/">munki</a>) updates to our commonly installed applications and internet plugins. One common practice is to run AutoPkg via <a href="http://jenkins-ci.org">JenkinsCI</a>, but I have not taken the time to install and configure Jenkins, so I just run AutoPkg via a <strike>cron</strike> launch daemon script.</p>
+
+<p>Because I didn&#8217;t want to have to check munki periodically to see if AutoPkg had downloaded anything, I wrote a wrapper script which emailed me the output from each AutoPkg run, which in our environment happens at the top of each hour. After a weekend of getting hourly emails (which I had to browse to check for any updates), I decided there had to be a better way to be notified of AutoPkg&#8217;s work.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/12/16/autopkg-change-notifications/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -438,6 +487,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/12/16/autopkg-change-notifications/">AutoPkg change notifications</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/05/24/slides-from-1400-plus-computers-in-3-weeks-are-you-nuts/">Slides from 1400+ computers in 3 weeks? Are you nuts?!?</a>
       </li>
     
@@ -451,10 +504,6 @@
     
       <li class="post">
         <a href="/blog/2013/01/22/the-big-project-setting-the-stage/">The Big Project- Setting the Stage by Inventorying</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/15/were-doing-what-and-on-what-timeline/">The Big Project- We&#8217;re doing what, and on what timeline?!?</a>
       </li>
     
   </ul>

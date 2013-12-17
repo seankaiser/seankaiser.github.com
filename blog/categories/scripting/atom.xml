@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: scripting | Sean Kaiser (dot) com]]></title>
+  <link href="http://seankaiser.com/blog/categories/scripting/atom.xml" rel="self"/>
+  <link href="http://seankaiser.com/"/>
+  <updated>2013-12-16T22:59:46-05:00</updated>
+  <id>http://seankaiser.com/</id>
+  <author>
+    <name><![CDATA[Sean Kaiser]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[AutoPkg change notifications]]></title>
+    <link href="http://seankaiser.com/blog/2013/12/16/autopkg-change-notifications/"/>
+    <updated>2013-12-16T22:01:00-05:00</updated>
+    <id>http://seankaiser.com/blog/2013/12/16/autopkg-change-notifications</id>
+    <content type="html"><![CDATA[<h2>AutoPkg change notifications</h2>
+
+<h1>Background</h1>
+
+<p>We use <a href="https://github.com/autopkg/autopkg">AutoPkg</a> to automatically download (and process into <a href="http://code.google.com/p/munki/">munki</a>) updates to our commonly installed applications and internet plugins. One common practice is to run AutoPkg via <a href="http://jenkins-ci.org">JenkinsCI</a>, but I have not taken the time to install and configure Jenkins, so I just run AutoPkg via a <strike>cron</strike> launch daemon script.</p>
+
+<p>Because I didn't want to have to check munki periodically to see if AutoPkg had downloaded anything, I wrote a wrapper script which emailed me the output from each AutoPkg run, which in our environment happens at the top of each hour. After a weekend of getting hourly emails (which I had to browse to check for any updates), I decided there had to be a better way to be notified of AutoPkg's work.</p>
+
+<!-- more -->
+
+
+<h1>Behold the power of diff</h1>
+
+<p>As I started thinking about my approach to this problem, I immediately thought that I wanted to be notified only when something was different from a 'nothing downloaded, packaged  or imported' (the actual output from AutoPkg when nothing has been done) run. And how better to do that than to compare the output from the run against the output when 'nothing (was) downloaded, packaged or imported.'</p>
+
+<p>My solution was to save the output of a AutoPkg run when nothing was done, and on each subsequent AutoPkg run, check that run's output against the saved output. If there are differences between these two files (because of either an update being downloaded, packaged or imported, or a download error), the script emails me the current AutoPkg run's output. This way when I get the email from the script, I know there's something that likely needs my attention.</p>
+
+<h2>Customizing the script</h2>
+
+<p>I've modified the script somewhat from my initial version, making it easier for other admins to customize for their environment. As you can see, there are three customization variables (<code>recipe_list</code>, <code>mail_recipient</code>, and <code>autopkg_user</code>) in the script. The only changes you'll need to make to the script are in those three lines.</p>
+
+<h1>recipe_list</h1>
+
+<p>You'll want to add whatever recipes you're feeding to AutoPkg on this line. If you're using munki, you'll want to be sure to include MakeCatalogs.munki at the end of the list, of course. In the example, I'm only using the AdobeFlashPlayer.munki and MakeCatalogs.munki recipes, indicating that I want to download and import any Flash updates, then rebuild the munki catalogs.</p>
+
+<h1>mail_recipient</h1>
+
+<p>This is the email address you want the change notification to be sent to.</p>
+
+<h1>autopkg_user</h1>
+
+<p>This is the local user that will be running the autopkg-wrapper script. The default (nothing changed) log will be stored in this user's Documents/autopkg folder.</p>
+
+<h2>Installation and initial configuration</h2>
+
+<p>Download the <a href="https://github.com/seankaiser/automation-scripts/blob/master/autopkg/autopkg-wrapper.sh">script</a> and install it in <code>/usr/local/bin</code>.</p>
+
+<p>As you're setting things up, you'll want to run this script manually, and you'll be prompted to run the script with the <code>initialize</code> argument, which will tell the script to run autopkg with your recipe list twice, the second of which will save the output information to the default log location for later reference. You should also manually run the script with the <code>initialize</code> option if you change the recipe list, since that will change the output.</p>
+
+<p>Once you've run the script manually, you're ready to set the script to run autoatically, either via cron or launchd. Obviously Apple wants you to run things via launchd, but it will work just fine as a cron job. An <a href="https://github.com/seankaiser/automation-scripts/blob/master/autopkg/autopkg-wrapper.sh">example launchd plist file</a> is available in my github repository. You'll need to modify the plist to meet your needs. It assumes the following:
+ - the <code>autopkg-wrapper.sh</code> script lives in <code>/usr/local/bin</code>,
+ - the user who runs the script is <code>autopkg</code>,
+ - you want the script to run hourly, at the top of the hour.</p>
+
+<p>If you're using the launchd plist, be sure to load it via something like <code>launchctl load /Library/LaunchDaemons/com.example.autopkg-wrapper.plist</code> (or reboot your machine, which will force the plist to be loaded on boot.)</p>
+
+<h2>What else?</h2>
+
+<p>That's pretty much it. Modify the three variables, load the launchd plist (or add to cron), and wait for the email notifications when AutoPkg finds and processes updates for you.</p>
+
+<h2>The code</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/sh
+</span><span class='line'>
+</span><span class='line'># autopkg automation script which, when run with no arguments, checks current run's output against a default output and sends the output to a user if there are differences
+</span><span class='line'>
+</span><span class='line'># adjust the following variables for your particular configuration
+</span><span class='line'>recipe_list="AdobeFlashPlayer.munki MakeCatalogs.munki"
+</span><span class='line'>mail_recipient="you@yourdomain.net"
+</span><span class='line'>autopkg_user="autopkg"
+</span><span class='line'>
+</span><span class='line'># don't change anything below this line
+</span><span class='line'>
+</span><span class='line'># define logger behavior
+</span><span class='line'>logger="/usr/bin/logger -t autopkg-wrapper"
+</span><span class='line'>user_home_dir=`dscl . -read /Users/${autopkg_user} NFSHomeDirectory | awk '{ print $2 }'`
+</span><span class='line'>
+</span><span class='line'># run autopkg
+</span><span class='line'>if [ "${1}" == "help" ]; then
+</span><span class='line'>  # show some help with regards to initialization option
+</span><span class='line'>  echo "usage: ${0} [initialize]"
+</span><span class='line'>  echo "(initializes a new default log for notification checking)"
+</span><span class='line'>  exit 0
+</span><span class='line'>
+</span><span class='line'>elif [ ! -f "${user_home_dir}"/Documents/autopkg/autopkg.out ]; then
+</span><span class='line'>  # default log doesn't exist, so tell user to run this script in initialization mode and exit
+</span><span class='line'>  echo "ERROR: default log does not exist, please run this script with initialize argument to initialize the log"
+</span><span class='line'>  exit -1
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>elif [ "${1}" == "initialize" ]; then
+</span><span class='line'>  # initialize default log for automated run to check against for notification if things have changed
+</span><span class='line'>  $logger "starting autopkg to initialize a new default output log"
+</span><span class='line'>
+</span><span class='line'>  echo "recipe list: ${recipe_list}"
+</span><span class='line'>  echo "autopkg user: ${autopkg_user}"
+</span><span class='line'>  echo "user home dir: ${user_home_dir}"
+</span><span class='line'>
+</span><span class='line'>  # make sure autopkg folder exists in autopkg_user's Documents folder
+</span><span class='line'>  if [ ! -d "${user_home_dir}"/Documents/autopkg ]; then
+</span><span class='line'>    /bin/mkdir -p "${user_home_dir}"/Documents/autopkg
+</span><span class='line'>  fi
+</span><span class='line'>
+</span><span class='line'>  # run autopkg twice, once to get any updates and the second to get a log indicating nothing changed
+</span><span class='line'>  $logger "autopkg initial run to temporary log location"
+</span><span class='line'>  echo "for this autopkg run, output will be shown"
+</span><span class='line'>  /usr/local/bin/autopkg run -v ${recipe_list} 2>&1
+</span><span class='line'>
+</span><span class='line'>  $logger "autopkg initial run to saved log location"
+</span><span class='line'>  echo "for this autopkg run, output will not be shown, but rather saved to default log location (${user_home_dir}/Documents/autopkg/autopkg.out"
+</span><span class='line'>  /usr/local/bin/autopkg run ${recipe_list} 2>&1 > "${user_home_dir}"/Documents/autopkg/autopkg.out
+</span><span class='line'>
+</span><span class='line'>  $logger "finished autopkg"
+</span><span class='line'>
+</span><span class='line'>else
+</span><span class='line'>  # default is to just run autopkg and email log if something changed from normal
+</span><span class='line'>  $logger "starting autopkg"
+</span><span class='line'>  /usr/local/bin/autopkg run ${recipe_list} 2>&1 > /tmp/autopkg.out
+</span><span class='line'>
+</span><span class='line'>  $logger "finished autopkg"
+</span><span class='line'>
+</span><span class='line'>  # check output against the saved log and if differences exist, send current log to specified recipient
+</span><span class='line'>  if [ "`diff /tmp/autopkg.out \"${user_home_dir}\"/Documents/autopkg/autopkg.out`" != "" ]; then
+</span><span class='line'>    # there are differences from a "Nothing downloaded, packaged or imported" run... might be an update or an error
+</span><span class='line'>    $logger "sending autopkg log"
+</span><span class='line'>    /usr/bin/mail -s "autopkg log" ${mail_recipient}  &lt; /tmp/autopkg.out
+</span><span class='line'>    $logger "sent autopkg log to {$mail_recipient}, `wc -l /tmp/autopkg.out | awk '{ print $1 }'` lines in log"
+</span><span class='line'>  else
+</span><span class='line'>    $logger "autopkg did nothing, so not sending log"
+</span><span class='line'>  fi
+</span><span class='line'>fi
+</span><span class='line'>exit 0</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+</feed>
