@@ -142,7 +142,7 @@
 
 <p>As you&#8217;re setting things up, you&#8217;ll want to run this script manually, and you&#8217;ll be prompted to run the script with the <code>initialize</code> argument, which will tell the script to run autopkg with your recipe list twice, the second of which will save the output information to the default log location for later reference. You should also manually run the script with the <code>initialize</code> option if you change the recipe list, since that will change the output.</p>
 
-<p>Once you&#8217;ve run the script manually, you&#8217;re ready to set the script to run autoatically, either via cron or launchd. Obviously Apple wants you to run things via launchd, but it will work just fine as a cron job. An <a href="https://github.com/seankaiser/automation-scripts/blob/master/autopkg/autopkg-wrapper.sh">example launchd plist file</a> is available in my github repository. You&#8217;ll need to modify the plist to meet your needs. It assumes the following:</p>
+<p>Once you&#8217;ve run the script manually, you&#8217;re ready to set the script to run autoatically, either via cron or launchd. Obviously Apple wants you to run things via launchd, but it will work just fine as a cron job. An <a href="https://github.com/seankaiser/automation-scripts/blob/master/autopkg/com.example.autopkg-wrapper.plist">example launchd plist file</a> is available in my github repository. You&#8217;ll need to modify the plist to meet your needs. It assumes the following:</p>
 
 <ul>
 <li>the <code>autopkg-wrapper.sh</code> script lives in <code>/usr/local/bin</code>,</li>

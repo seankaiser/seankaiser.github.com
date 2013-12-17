@@ -4,7 +4,7 @@
   <title><![CDATA[Category: work | Sean Kaiser (dot) com]]></title>
   <link href="http://seankaiser.com/blog/categories/work/atom.xml" rel="self"/>
   <link href="http://seankaiser.com/"/>
-  <updated>2013-12-17T10:51:44-05:00</updated>
+  <updated>2013-12-17T15:00:10-05:00</updated>
   <id>http://seankaiser.com/</id>
   <author>
     <name><![CDATA[Sean Kaiser]]></name>
@@ -55,7 +55,7 @@
 
 <p>As you're setting things up, you'll want to run this script manually, and you'll be prompted to run the script with the <code>initialize</code> argument, which will tell the script to run autopkg with your recipe list twice, the second of which will save the output information to the default log location for later reference. You should also manually run the script with the <code>initialize</code> option if you change the recipe list, since that will change the output.</p>
 
-<p>Once you've run the script manually, you're ready to set the script to run autoatically, either via cron or launchd. Obviously Apple wants you to run things via launchd, but it will work just fine as a cron job. An <a href="https://github.com/seankaiser/automation-scripts/blob/master/autopkg/autopkg-wrapper.sh">example launchd plist file</a> is available in my github repository. You'll need to modify the plist to meet your needs. It assumes the following:</p>
+<p>Once you've run the script manually, you're ready to set the script to run autoatically, either via cron or launchd. Obviously Apple wants you to run things via launchd, but it will work just fine as a cron job. An <a href="https://github.com/seankaiser/automation-scripts/blob/master/autopkg/com.example.autopkg-wrapper.plist">example launchd plist file</a> is available in my github repository. You'll need to modify the plist to meet your needs. It assumes the following:</p>
 
 <ul>
 <li>the <code>autopkg-wrapper.sh</code> script lives in <code>/usr/local/bin</code>,</li>
