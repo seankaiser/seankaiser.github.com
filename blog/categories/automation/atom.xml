@@ -4,7 +4,7 @@
   <title><![CDATA[Category: automation | Sean Kaiser (dot) com]]></title>
   <link href="http://seankaiser.com/blog/categories/automation/atom.xml" rel="self"/>
   <link href="http://seankaiser.com/"/>
-  <updated>2013-12-16T22:59:46-05:00</updated>
+  <updated>2013-12-16T23:01:50-05:00</updated>
   <id>http://seankaiser.com/</id>
   <author>
     <name><![CDATA[Sean Kaiser]]></name>
@@ -18,9 +18,7 @@
     <link href="http://seankaiser.com/blog/2013/12/16/autopkg-change-notifications/"/>
     <updated>2013-12-16T22:01:00-05:00</updated>
     <id>http://seankaiser.com/blog/2013/12/16/autopkg-change-notifications</id>
-    <content type="html"><![CDATA[<h2>AutoPkg change notifications</h2>
-
-<h1>Background</h1>
+    <content type="html"><![CDATA[<h2>Background</h2>
 
 <p>We use <a href="https://github.com/autopkg/autopkg">AutoPkg</a> to automatically download (and process into <a href="http://code.google.com/p/munki/">munki</a>) updates to our commonly installed applications and internet plugins. One common practice is to run AutoPkg via <a href="http://jenkins-ci.org">JenkinsCI</a>, but I have not taken the time to install and configure Jenkins, so I just run AutoPkg via a <strike>cron</strike> launch daemon script.</p>
 
@@ -29,7 +27,7 @@
 <!-- more -->
 
 
-<h1>Behold the power of diff</h1>
+<h2>Behold the power of diff</h2>
 
 <p>As I started thinking about my approach to this problem, I immediately thought that I wanted to be notified only when something was different from a 'nothing downloaded, packaged  or imported' (the actual output from AutoPkg when nothing has been done) run. And how better to do that than to compare the output from the run against the output when 'nothing (was) downloaded, packaged or imported.'</p>
 
@@ -39,15 +37,15 @@
 
 <p>I've modified the script somewhat from my initial version, making it easier for other admins to customize for their environment. As you can see, there are three customization variables (<code>recipe_list</code>, <code>mail_recipient</code>, and <code>autopkg_user</code>) in the script. The only changes you'll need to make to the script are in those three lines.</p>
 
-<h1>recipe_list</h1>
+<h3>recipe_list</h3>
 
 <p>You'll want to add whatever recipes you're feeding to AutoPkg on this line. If you're using munki, you'll want to be sure to include MakeCatalogs.munki at the end of the list, of course. In the example, I'm only using the AdobeFlashPlayer.munki and MakeCatalogs.munki recipes, indicating that I want to download and import any Flash updates, then rebuild the munki catalogs.</p>
 
-<h1>mail_recipient</h1>
+<h3>mail_recipient</h3>
 
 <p>This is the email address you want the change notification to be sent to.</p>
 
-<h1>autopkg_user</h1>
+<h3>autopkg_user</h3>
 
 <p>This is the local user that will be running the autopkg-wrapper script. The default (nothing changed) log will be stored in this user's Documents/autopkg folder.</p>
 
